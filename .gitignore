@@ -1,0 +1,20 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+
+# Local envs
+.env
+.env.local
+
+# Vendor / junk
+node_modules/
+dist/
+.cache/

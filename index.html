@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Onyx is an AI companion that tracks your money, your habits, and your momentum — and tells you the truth about all of it.">
+<meta property="og:title" content="Onyx — the companion who pays attention.">
+<meta property="og:description" content="An AI companion that tracks your money, your habits, and your momentum — and tells you the truth about all of it.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A0A0A">
+<title>Onyx — the companion who pays attention.</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Grain overlay -->
+<div class="grain" aria-hidden="true"></div>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="#" class="logo">
+      <span class="logo__mark">O</span>
+      <span class="logo__text">Onyx</span>
+    </a>
+    <div class="nav__meta">
+      <span class="nav__meta-item"><span class="dot"></span> Building live</span>
+      <a href="#waitlist" class="nav__cta">Get early access</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero: asymmetric, console-driven -->
+<header class="hero">
+  <div class="hero__left">
+    <div class="eyebrow">
+      <span class="eyebrow__tag">J-Works // 2026</span>
+      <span class="eyebrow__status">v 0.1 — private beta</span>
+    </div>
+
+    <h1 class="hero__title">
+      <span class="title__line">The companion</span>
+      <span class="title__line">who <em>pays</em> attention.</span>
+    </h1>
+
+    <p class="hero__body">
+      Most apps make you log your life. Onyx already knows it. Your money.
+      Your habits. The 3&nbsp;AM scrolls. Onyx watches all of it — and tells you
+      the truth, every morning, without making you feel bad about any of it.
+    </p>
+
+    <form class="cta-form" id="waitlist">
+      <input type="email" placeholder="you@somewhere.com" required id="email-input" autocomplete="email">
+      <button type="submit">
+        Reserve your spot
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" aria-hidden="true"><path d="M8 1L13 6L8 11M13 6H0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </form>
+    <div class="cta-note" id="cta-note">
+      No spam. No paid ads. Just the ones who get it.
+    </div>
+
+    <div class="hero__trust">
+      <div class="trust-item">
+        <div class="trust-item__num">1</div>
+        <div class="trust-item__label">Person building it</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-item__num">$500</div>
+        <div class="trust-item__label">Total budget</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-item__num">30</div>
+        <div class="trust-item__label">Days to launch</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__right">
+    <!-- Phone/console mockup -->
+    <div class="console" id="console">
+      <div class="console__frame">
+        <div class="console__header">
+          <div class="console__dots">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="console__title">onyx &mdash; 6:42 AM</div>
+        </div>
+        <div class="console__screen" id="screen">
+          <div class="line line--system"><span class="prompt">&rsaquo;</span> onyx v0.9.1 — running</div>
+          <div class="line line--system"><span class="prompt">&rsaquo;</span> connected. 247 data points synced.</div>
+          <div class="line line--onyx typed" data-text="good morning, jaime."></div>
+          <div class="line line--onyx typed" data-delay="1200" data-text="yesterday: $47.20 spent. $32 on food."></div>
+          <div class="line line--onyx typed" data-delay="2600" data-text="you said you'd cap food at $20."></div>
+          <div class="line line--onyx typed" data-delay="3900" data-text="no judgement. just facts."></div>
+          <div class="line line--onyx typed" data-delay="5200" data-text="onyx score: 714. up 12 from monday."></div>
+          <div class="line line--onyx typed" data-delay="6500" data-text="want me to adjust your budget, or your behavior?"></div>
+          <div class="line line--input">
+            <span class="prompt prompt--user">&rsaquo;</span>
+            <span class="cursor">_</span>
+          </div>
+        </div>
+      </div>
+      <div class="console__caption">
+        An actual morning with Onyx. This is the product.
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Meet Onyx -->
+<section class="meet">
+  <div class="meet__inner">
+    <div class="meet__left">
+      <div class="section-label">01 // the companion</div>
+      <h2 class="section-title">
+        Meet Onyx. <em>3.5 lbs</em><br>
+        of quiet encouragement.
+      </h2>
+      <p class="section-body">
+        Not a pet. Not a motivational coach. Not another dashboard full of charts
+        you'll ignore in a week. Onyx is a companion — sits on your phone, watches
+        your day, remembers what matters, and shows up every morning with one
+        honest read on how you're doing.
+      </p>
+      <p class="section-body">
+        Think of the friend who always texts back. The one who remembers what you
+        said you'd do. The one who notices. That, but it also watches your
+        checking account.
+      </p>
+    </div>
+
+    <div class="meet__right">
+      <div class="onyx-stage">
+        <svg class="onyx-robot" viewBox="0 0 240 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Onyx, a sleek robot companion">
+          <defs>
+            <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2a2a2a"/>
+              <stop offset="100%" stop-color="#0a0a0a"/>
+            </linearGradient>
+            <linearGradient id="headGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#262626"/>
+              <stop offset="100%" stop-color="#0d0d0d"/>
+            </linearGradient>
+            <radialGradient id="eyeGrad" cx="0.4" cy="0.4" r="0.7">
+              <stop offset="0%" stop-color="#fff2c2"/>
+              <stop offset="40%" stop-color="#e8c668"/>
+              <stop offset="100%" stop-color="#8a6d2b"/>
+            </radialGradient>
+            <radialGradient id="coreGrad" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0%" stop-color="#f3d876"/>
+              <stop offset="60%" stop-color="#c9a84c"/>
+              <stop offset="100%" stop-color="#5c4a1c"/>
+            </radialGradient>
+            <filter id="softGlow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+
+          <!-- Floor reflection -->
+          <ellipse cx="120" cy="288" rx="60" ry="6" fill="rgba(201,168,76,0.14)"/>
+
+          <!-- Main robot group (floats) -->
+          <g class="robot-group">
+            <!-- Body -->
+            <rect x="66" y="120" width="108" height="120" rx="24" fill="url(#bodyGrad)" stroke="#c9a84c" stroke-width="1.2"/>
+            <!-- Body highlight -->
+            <path d="M 72 126 Q 72 120 80 120 L 168 120 Q 174 120 174 126" stroke="rgba(255,255,255,0.06)" stroke-width="1" fill="none"/>
+            <!-- Body panel lines -->
+            <line x1="120" y1="120" x2="120" y2="240" stroke="rgba(201,168,76,0.12)" stroke-width="0.5"/>
+            <line x1="66" y1="200" x2="174" y2="200" stroke="rgba(201,168,76,0.18)" stroke-width="0.5"/>
+
+            <!-- Core light -->
+            <g class="core">
+              <circle cx="120" cy="170" r="14" fill="url(#coreGrad)" filter="url(#softGlow)"/>
+              <circle cx="120" cy="170" r="20" fill="none" stroke="rgba(201,168,76,0.2)" stroke-width="0.8"/>
+              <circle cx="120" cy="170" r="26" fill="none" stroke="rgba(201,168,76,0.08)" stroke-width="0.5"/>
+            </g>
+
+            <!-- Head -->
+            <rect x="72" y="44" width="96" height="76" rx="22" fill="url(#headGrad)" stroke="#c9a84c" stroke-width="1.2"/>
+            <!-- Head highlight -->
+            <path d="M 78 50 Q 78 44 86 44 L 154 44 Q 162 44 162 50" stroke="rgba(255,255,255,0.06)" stroke-width="1" fill="none"/>
+
+            <!-- Visor -->
+            <rect x="82" y="62" width="76" height="36" rx="14" fill="#050505" stroke="rgba(201,168,76,0.3)" stroke-width="0.75"/>
+            <!-- Visor scanline -->
+            <rect x="82" y="62" width="76" height="36" rx="14" fill="none" stroke="rgba(201,168,76,0.1)" stroke-width="0.5"/>
+            <line x1="82" y1="80" x2="158" y2="80" stroke="rgba(201,168,76,0.05)" stroke-width="0.3"/>
+
+            <!-- Eyes -->
+            <g class="eye eye--left">
+              <circle cx="104" cy="80" r="7" fill="url(#eyeGrad)"/>
+              <circle cx="106" cy="78" r="2.5" fill="rgba(255,255,255,0.85)"/>
+            </g>
+            <g class="eye eye--right">
+              <circle cx="136" cy="80" r="7" fill="url(#eyeGrad)"/>
+              <circle cx="138" cy="78" r="2.5" fill="rgba(255,255,255,0.85)"/>
+            </g>
+
+            <!-- Antenna -->
+            <line x1="120" y1="44" x2="120" y2="24" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+            <circle class="antenna-tip" cx="120" cy="20" r="4" fill="#c9a84c"/>
+
+            <!-- Ear panels -->
+            <rect x="64" y="66" width="8" height="24" rx="3" fill="#1a1a1a" stroke="#c9a84c" stroke-width="0.8"/>
+            <rect x="168" y="66" width="8" height="24" rx="3" fill="#1a1a1a" stroke="#c9a84c" stroke-width="0.8"/>
+
+            <!-- Arms -->
+            <!-- Left (static) -->
+            <g>
+              <rect x="40" y="132" width="26" height="14" rx="7" fill="#1a1a1a" stroke="#c9a84c" stroke-width="1"/>
+              <circle cx="40" cy="139" r="6" fill="#1a1a1a" stroke="#c9a84c" stroke-width="1"/>
+            </g>
+            <!-- Right (waving) -->
+            <g class="wave-arm">
+              <rect x="174" y="128" width="28" height="14" rx="7" fill="#1a1a1a" stroke="#c9a84c" stroke-width="1"/>
+              <g class="hand" transform="translate(204, 125)">
+                <circle cx="0" cy="0" r="8" fill="#1a1a1a" stroke="#c9a84c" stroke-width="1"/>
+                <line x1="-4" y1="-6" x2="-5" y2="-14" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round"/>
+                <line x1="0" y1="-7" x2="0" y2="-16" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round"/>
+                <line x1="4" y1="-6" x2="5" y2="-14" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round"/>
+                <line x1="6" y1="-2" x2="12" y2="-4" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round"/>
+              </g>
+            </g>
+
+            <!-- Legs -->
+            <rect x="84" y="236" width="20" height="32" rx="6" fill="#1a1a1a" stroke="#c9a84c" stroke-width="0.9"/>
+            <rect x="136" y="236" width="20" height="32" rx="6" fill="#1a1a1a" stroke="#c9a84c" stroke-width="0.9"/>
+            <!-- Feet -->
+            <rect x="78" y="262" width="32" height="12" rx="6" fill="#1a1a1a" stroke="#c9a84c" stroke-width="0.9"/>
+            <rect x="130" y="262" width="32" height="12" rx="6" fill="#1a1a1a" stroke="#c9a84c" stroke-width="0.9"/>
+          </g>
+        </svg>
+
+        <!-- Specs card -->
+        <div class="specs">
+          <div class="specs__row"><span class="specs__k">Name</span><span class="specs__v">Onyx</span></div>
+          <div class="specs__row"><span class="specs__k">Class</span><span class="specs__v">Companion</span></div>
+          <div class="specs__row"><span class="specs__k">Tracks</span><span class="specs__v">Money, habits, goals</span></div>
+          <div class="specs__row"><span class="specs__k">Personality</span><span class="specs__v">Honest. Warm. Unimpressed by excuses.</span></div>
+          <div class="specs__row"><span class="specs__k">Status</span><span class="specs__v"><span class="dot"></span> Online</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- What Onyx actually does -->
+<section class="does">
+  <div class="does__inner">
+    <div class="section-label">02 // what it actually does</div>
+    <h2 class="section-title section-title--wide">
+      Not another dashboard. Not another streak app.<br>
+      <em>A companion that notices.</em>
+    </h2>
+
+    <div class="cards">
+      <article class="card">
+        <div class="card__tag">morning</div>
+        <p class="card__quote">
+          "good morning. you slept 6h 40m. that's under your goal but better than
+          last week. your card hit 3 times yesterday — all under $15. clean day."
+        </p>
+        <div class="card__sub">Not a report. A check-in.</div>
+      </article>
+
+      <article class="card">
+        <div class="card__tag">live</div>
+        <p class="card__quote">
+          "heads up: you just spent $28 on doordash. that's the third time this
+          week. i can move $50 to savings and lock the food budget, or we ride."
+        </p>
+        <div class="card__sub">Knows your money. Doesn't lecture.</div>
+      </article>
+
+      <article class="card">
+        <div class="card__tag">night</div>
+        <p class="card__quote">
+          "today: 2 workouts logged, 1 missed. score up 14. you hit your
+          writing streak for day 23. no one saw it but me. proud of you."
+        </p>
+        <div class="card__sub">Witnesses the work nobody else sees.</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="how">
+  <div class="how__inner">
+    <div class="section-label">03 // how it works</div>
+    <h2 class="section-title">
+      <em>Three moves.</em><br>
+      That's the whole product.
+    </h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step__num">01</div>
+        <h3 class="step__title">Open Onyx. Meet Onyx.</h3>
+        <p class="step__body">
+          First time you open the app, Onyx introduces itself and asks you two
+          questions. That's onboarding. No 14 screens. No sign-up wizard.
+        </p>
+      </div>
+      <div class="step">
+        <div class="step__num">02</div>
+        <h3 class="step__title">Log what matters. Or don't.</h3>
+        <p class="step__body">
+          Money, habits, goals, whatever. Quick taps. Onyx fills in the rest
+          and starts learning your rhythm. The more you feed it, the sharper it gets.
+        </p>
+      </div>
+      <div class="step">
+        <div class="step__num">03</div>
+        <h3 class="step__title">Wake up. Get read.</h3>
+        <p class="step__body">
+          Every morning Onyx tells you the truth about yesterday — clear, calm,
+          a little too honest. Your score moves. You level. You keep going.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Vs the others (honest, quick) -->
+<section class="vs">
+  <div class="vs__inner">
+    <div class="section-label">04 // what makes us different</div>
+    <h2 class="section-title">
+      Every app in this space<br>
+      sells a feature. <em>We sell a relationship.</em>
+    </h2>
+
+    <div class="compare">
+      <div class="compare__col compare__col--them">
+        <div class="compare__head">The other apps</div>
+        <ul>
+          <li>Rate you like a video game.</li>
+          <li>Gamify habits. Ignore money.</li>
+          <li>Anime warriors. Sigma energy.</li>
+          <li>60-day &laquo;reset.&raquo; Then churn.</li>
+          <li>Built for one kind of kid.</li>
+        </ul>
+      </div>
+      <div class="compare__col compare__col--us">
+        <div class="compare__head">Onyx</div>
+        <ul>
+          <li>Knows you. Doesn't judge you.</li>
+          <li>Money + habits + life in one place.</li>
+          <li>Quiet, premium, adult.</li>
+          <li>Not a reset. A relationship.</li>
+          <li>Built for the ones figuring it out alone.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Founder note -->
+<section class="founder">
+  <div class="founder__inner">
+    <div class="section-label">05 // a note from the builder</div>
+    <blockquote class="founder__quote">
+      <p>
+        I'm building Onyx because I needed it.
+      </p>
+      <p>
+        I'm 3 AM after a shift, looking at my bank app, feeling behind. The
+        average millionaire is 54. I'm not. You're probably not either. But
+        nobody around you has figured it out, and the apps you download either
+        talk to you like a child or like a drill sergeant. I wanted something
+        in between — something that just <em>pays attention</em>.
+      </p>
+      <p>
+        So I'm building it. $500 to my name. Thirty days. One shot.
+      </p>
+      <p>
+        If that sounds like your life too, get on the list. Onyx isn't ready yet,
+        but when it is, you'll be the first through the door.
+      </p>
+    </blockquote>
+    <div class="founder__sig">
+      <span class="founder__name">Jaime</span>
+      <span class="founder__hq">J-Works HQ // founder &amp; only employee</span>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="final">
+  <div class="final__inner">
+    <h2 class="final__title">
+      You're not behind.<br>
+      <em>You're just alone in it.</em>
+    </h2>
+    <p class="final__body">Onyx changes that. Get on the list.</p>
+
+    <form class="cta-form cta-form--lg" id="waitlist-2">
+      <input type="email" placeholder="you@somewhere.com" required id="email-input-2" autocomplete="email">
+      <button type="submit">
+        I want in
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" aria-hidden="true"><path d="M8 1L13 6L8 11M13 6H0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </form>
+    <div class="cta-note" id="cta-note-2">Takes about 4 seconds.</div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__left">
+      <div class="logo">
+        <span class="logo__mark">O</span>
+        <span class="logo__text">Onyx</span>
+      </div>
+      <div class="footer__tag">Built for the ones figuring it out alone.</div>
+    </div>
+    <div class="footer__right">
+      <div class="footer__line">Made by one person. Building in public.</div>
+      <a class="footer__email" href="mailto:hello@getonyx.app">hello@getonyx.app</a>
+      <div class="footer__fine">&copy; 2026 J-Works HQ. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

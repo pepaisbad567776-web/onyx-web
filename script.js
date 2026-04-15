@@ -150,7 +150,7 @@
   // ----------------------------------------------------------------
 
   const revealTargets = document.querySelectorAll(
-    '.section-title, .card, .step, .compare__col, .founder__quote, .final__title, .specs, .hero__title'
+    '.section-title, .card, .step, .compare__col, .founder__quote, .final__title, .phone-chat, .hero__title'
   );
 
   if ('IntersectionObserver' in window && revealTargets.length) {
@@ -174,23 +174,60 @@
   }
 
   // ----------------------------------------------------------------
-  // 4. Mouse-follow glow on the robot (subtle, optional)
+  // 4. Live chat simulation
   // ----------------------------------------------------------------
 
-  const robot = document.querySelector('.onyx-robot');
-  if (robot && window.matchMedia('(min-width: 960px)').matches) {
-    const stage = robot.closest('.onyx-stage');
-    if (stage) {
-      stage.addEventListener('mousemove', (e) => {
-        const rect = stage.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        robot.style.transform = `translate(${x * 8}px, ${y * 6}px)`;
-      });
-      stage.addEventListener('mouseleave', () => {
-        robot.style.transform = '';
-      });
+  var chatLines = [
+    "Saw you skipped the gym again. No judgment. What happened?",
+    "Coffee #4 today. You okay?",
+    "Your spending is up 23% this week. Want to look at it together?",
+    "Slept 4.5 hrs. Don\u2019t think I didn\u2019t notice.",
+    "You said you\u2019d call your mom Sunday. It\u2019s Tuesday.",
+    "Hit your savings goal early. Quietly proud of you.",
+  ];
+
+  var typingEl = document.getElementById('typing-dots');
+  var msgEl = document.getElementById('chat-msg');
+  var phoneEl = document.getElementById('phone-chat');
+
+  if (typingEl && msgEl) {
+    var chatIdx = 0;
+    var chatPaused = false;
+
+    if (phoneEl) {
+      phoneEl.addEventListener('mouseenter', function() { chatPaused = true; });
+      phoneEl.addEventListener('mouseleave', function() { chatPaused = false; });
     }
+
+    function nextChat() {
+      if (chatPaused) { setTimeout(nextChat, 500); return; }
+
+      // Fade out current message
+      msgEl.classList.remove('visible');
+
+      setTimeout(function() {
+        // Show typing dots
+        msgEl.textContent = '';
+        typingEl.classList.add('visible');
+
+        setTimeout(function() {
+          // Hide dots, show message
+          typingEl.classList.remove('visible');
+
+          setTimeout(function() {
+            msgEl.textContent = chatLines[chatIdx];
+            msgEl.classList.add('visible');
+            chatIdx = (chatIdx + 1) % chatLines.length;
+
+            // Wait, then cycle
+            setTimeout(nextChat, 4000);
+          }, 180);
+        }, 1400);
+      }, 350);
+    }
+
+    // Start after a short delay
+    setTimeout(nextChat, 800);
   }
 
 })();

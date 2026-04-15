@@ -120,6 +120,9 @@
       // Update social proof count
       bumpCount();
 
+      // Celebrate!
+      if (window.onyxCelebrate) window.onyxCelebrate();
+
       // Show success
       form.classList.add('submitted');
       var note = document.getElementById(noteId);
@@ -174,60 +177,134 @@
   }
 
   // ----------------------------------------------------------------
-  // 4. Live chat simulation
+  // 4. Conversation chat engine (char-by-char typing)
   // ----------------------------------------------------------------
 
-  var chatLines = [
-    "Saw you skipped the gym again. No judgment. What happened?",
-    "Coffee #4 today. You okay?",
-    "Your spending is up 23% this week. Want to look at it together?",
-    "Slept 4.5 hrs. Don\u2019t think I didn\u2019t notice.",
-    "You said you\u2019d call your mom Sunday. It\u2019s Tuesday.",
-    "Hit your savings goal early. Quietly proud of you.",
+  var CONVOS = [
+    [
+      { from: 'onyx', text: "good morning. you slept 4.5 hrs." },
+      { from: 'onyx', text: "don\u2019t think i didn\u2019t notice." },
+    ],
+    [
+      { from: 'onyx', text: "saw you skipped the gym. what happened?" },
+      { from: 'user', text: "long shift" },
+      { from: 'onyx', text: "rest day earned. back at it tomorrow." },
+    ],
+    [
+      { from: 'onyx', text: "coffee #4 today. you okay?" },
+      { from: 'user', text: "deadline week" },
+      { from: 'onyx', text: "say less. hydrate tho." },
+    ],
+    [
+      { from: 'onyx', text: "your spending is up 23% this week." },
+      { from: 'onyx', text: "want to look at it together?" },
+    ],
+    [
+      { from: 'onyx', text: "you said you\u2019d call your mom sunday." },
+      { from: 'onyx', text: "it\u2019s tuesday." },
+    ],
+    [
+      { from: 'onyx', text: "hit your savings goal 3 days early." },
+      { from: 'onyx', text: "quietly proud of you." },
+    ],
+    [
+      { from: 'onyx', text: "3 workouts logged. score up 14." },
+      { from: 'user', text: "let\u2019s go" },
+      { from: 'onyx', text: "that\u2019s the energy. keep it moving." },
+    ],
+    [
+      { from: 'onyx', text: "you\u2019ve been doom-scrolling for 40 min." },
+      { from: 'onyx', text: "not judging. just noticing." },
+    ],
   ];
 
-  var typingEl = document.getElementById('typing-dots');
-  var msgEl = document.getElementById('chat-msg');
+  var chatBody = document.getElementById('chat-body');
   var phoneEl = document.getElementById('phone-chat');
+  var chatPaused = false;
 
-  if (typingEl && msgEl) {
-    var chatIdx = 0;
-    var chatPaused = false;
-
-    if (phoneEl) {
-      phoneEl.addEventListener('mouseenter', function() { chatPaused = true; });
-      phoneEl.addEventListener('mouseleave', function() { chatPaused = false; });
-    }
-
-    function nextChat() {
-      if (chatPaused) { setTimeout(nextChat, 500); return; }
-
-      // Fade out current message
-      msgEl.classList.remove('visible');
-
-      setTimeout(function() {
-        // Show typing dots
-        msgEl.textContent = '';
-        typingEl.classList.add('visible');
-
-        setTimeout(function() {
-          // Hide dots, show message
-          typingEl.classList.remove('visible');
-
-          setTimeout(function() {
-            msgEl.textContent = chatLines[chatIdx];
-            msgEl.classList.add('visible');
-            chatIdx = (chatIdx + 1) % chatLines.length;
-
-            // Wait, then cycle
-            setTimeout(nextChat, 4000);
-          }, 180);
-        }, 1400);
-      }, 350);
-    }
-
-    // Start after a short delay
-    setTimeout(nextChat, 800);
+  if (phoneEl) {
+    phoneEl.addEventListener('mouseenter', function () { chatPaused = true; });
+    phoneEl.addEventListener('mouseleave', function () { chatPaused = false; });
   }
+
+  function typeText(el, text, speed, done) {
+    var i = 0;
+    function step() {
+      if (chatPaused) { setTimeout(step, 200); return; }
+      if (i < text.length) {
+        el.textContent = text.substring(0, i + 1);
+        i++;
+        if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
+        var ch = text[i - 1];
+        var d = speed;
+        if (ch === '.' || ch === '?' || ch === '!') d = speed * 2.2;
+        else if (ch === ',') d = speed * 1.5;
+        else d = speed + Math.random() * (speed * 0.3);
+        setTimeout(step, d);
+      } else {
+        if (done) done();
+      }
+    }
+    step();
+  }
+
+  function playConvo(idx) {
+    if (!chatBody) return;
+    var convo = CONVOS[idx % CONVOS.length];
+    chatBody.innerHTML = '';
+    var mi = 0;
+
+    function nextMsg() {
+      if (chatPaused) { setTimeout(nextMsg, 300); return; }
+      if (mi >= convo.length) {
+        // Finished conversation — pause then cycle
+        setTimeout(function () {
+          // Fade out
+          var bubbles = chatBody.querySelectorAll('.chat-bubble');
+          for (var k = 0; k < bubbles.length; k++) bubbles[k].classList.remove('visible');
+          setTimeout(function () { playConvo(idx + 1); }, 600);
+        }, 3500);
+        return;
+      }
+
+      var msg = convo[mi];
+      mi++;
+
+      if (msg.from === 'onyx') {
+        // Typing dots
+        var dots = document.createElement('div');
+        dots.className = 'typing-dots visible';
+        dots.innerHTML = '<span></span><span></span><span></span>';
+        chatBody.appendChild(dots);
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+        setTimeout(function () {
+          chatBody.removeChild(dots);
+          var bub = document.createElement('div');
+          bub.className = 'chat-bubble chat-bubble--onyx visible';
+          chatBody.appendChild(bub);
+          // Perk corner onyx
+          if (window.onyxPerk) window.onyxPerk();
+          typeText(bub, msg.text, 200, function () {
+            setTimeout(nextMsg, 1200);
+          });
+        }, 900);
+      } else {
+        // User reply — faster typing
+        setTimeout(function () {
+          var bub = document.createElement('div');
+          bub.className = 'chat-bubble chat-bubble--user visible';
+          chatBody.appendChild(bub);
+          typeText(bub, msg.text, 90, function () {
+            setTimeout(nextMsg, 1000);
+          });
+        }, 1200);
+      }
+    }
+
+    nextMsg();
+  }
+
+  if (chatBody) setTimeout(function () { playConvo(0); }, 1200);
 
 })();

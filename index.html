@@ -141,8 +141,10 @@
 
     <div class="meet__right">
       <div class="onyx-stage">
-        <!-- Interactive 3D Onyx — desktop only -->
-        <div class="onyx-3d" id="onyx-3d" aria-label="Interactive 3D Onyx companion"></div>
+        <!-- Pixel Onyx — the character -->
+        <div class="onyx-pixel">
+          <canvas id="onyx-main-canvas" width="32" height="32"></canvas>
+        </div>
 
         <!-- Phone chat simulation -->
         <div class="phone-chat" id="phone-chat">
@@ -155,12 +157,7 @@
                 <span class="phone-chat__status"><span class="dot"></span> Online</span>
               </div>
             </div>
-            <div class="phone-chat__body" id="chat-body">
-              <div class="typing-dots" id="typing-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <div class="chat-msg" id="chat-msg"></div>
-            </div>
+            <div class="phone-chat__body" id="chat-body"></div>
             <div class="phone-chat__bar">
               <span>Message Onyx…</span>
             </div>
@@ -366,8 +363,12 @@
   </div>
 </footer>
 
+<!-- Persistent corner companion -->
+<div class="onyx-corner" id="onyx-corner">
+  <canvas id="onyx-corner-canvas" width="32" height="32"></canvas>
+</div>
+
 <script src="script.js"></script>
-<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.158.0/build/three.module.js"}}</script>
-<script type="module" src="scene.js"></script>
+<script src="onyx.js"></script>
 </body>
 </html>

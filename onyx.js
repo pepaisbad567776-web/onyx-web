@@ -8,11 +8,12 @@
   var S = 32;
 
   // 5-color palette
-  var body   = '#0d0d0d';
-  var hi     = '#191919';
+  var body   = '#161616';
+  var hi     = '#252525';
   var gold   = '#c9a84c';
   var wht    = '#fff8e1';
-  var sock   = '#040404';
+  var sock   = '#050505';
+  var outline = '#2a2218'; // dark gold outline
 
   // Body silhouette: [y, x, w]
   var B = [
@@ -57,7 +58,14 @@
     ctx.clearRect(0, 0, S, S);
     var by = Math.round(breathY + jumpY);
 
-    // Body
+    // Gold outline (1px expanded silhouette drawn first)
+    ctx.fillStyle = outline;
+    for (var i = 0; i < B.length; i++) {
+      var sy = B[i][0], sx = B[i][1], sw = B[i][2];
+      ctx.fillRect(sx - 1, sy + by - 1, sw + 2, 3); // expand 1px in all directions
+    }
+
+    // Body (drawn on top of outline)
     ctx.fillStyle = body;
     for (var i = 0; i < B.length; i++) {
       ctx.fillRect(B[i][1], B[i][0] + by, B[i][2], 1);

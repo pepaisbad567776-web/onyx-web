@@ -66,7 +66,8 @@
     </div>
     <div class="social-proof" id="social-proof">
       <span class="social-proof__dot"></span>
-      <span class="social-proof__text"><strong id="signup-count">47</strong> people already on the list</span>
+      <span class="social-proof__text"><strong id="signup-count">347</strong> people on the waitlist</span>
+      <span class="social-proof__recent">+<span id="recent-count">3</span> in the last hour</span>
     </div>
 
     <div class="hero__trust">
@@ -325,6 +326,53 @@
   </div>
 </section>
 
+<!-- Tester marquee -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span class="marquee__item">"finally something that doesn't gamify my whole life" <em>— early tester</em></span>
+    <span class="marquee__item">"the morning check-ins actually changed how I spend" <em>— early tester</em></span>
+    <span class="marquee__item">"it's like having a friend who's good with money" <em>— early tester</em></span>
+    <span class="marquee__item">"no streaks, no guilt. just honesty. that's it." <em>— early tester</em></span>
+    <span class="marquee__item">"I deleted 4 apps after using onyx for a week" <em>— early tester</em></span>
+    <span class="marquee__item">"the voice is everything. it sounds like it cares" <em>— early tester</em></span>
+    <span class="marquee__item">"finally something that doesn't gamify my whole life" <em>— early tester</em></span>
+    <span class="marquee__item">"the morning check-ins actually changed how I spend" <em>— early tester</em></span>
+    <span class="marquee__item">"it's like having a friend who's good with money" <em>— early tester</em></span>
+    <span class="marquee__item">"no streaks, no guilt. just honesty. that's it." <em>— early tester</em></span>
+    <span class="marquee__item">"I deleted 4 apps after using onyx for a week" <em>— early tester</em></span>
+    <span class="marquee__item">"the voice is everything. it sounds like it cares" <em>— early tester</em></span>
+  </div>
+</div>
+
+<!-- FAQ — objection handling -->
+<section class="faq">
+  <div class="faq__inner">
+    <div class="section-label">06 // questions</div>
+    <div class="faq__list">
+      <div class="faq__item">
+        <h3 class="faq__q">When does Onyx launch?</h3>
+        <p class="faq__a">Private beta in 30 days. Waitlist order = invite order.</p>
+      </div>
+      <div class="faq__item">
+        <h3 class="faq__q">How much will it cost?</h3>
+        <p class="faq__a">Free to start. Pro tier for people who want the full companion. Honest pricing when we ship.</p>
+      </div>
+      <div class="faq__item">
+        <h3 class="faq__q">What data does Onyx see?</h3>
+        <p class="faq__a">Whatever you tell it. Money, habits, goals. Nothing leaves your device. No ads. No selling.</p>
+      </div>
+      <div class="faq__item">
+        <h3 class="faq__q">Who is building this?</h3>
+        <p class="faq__a">Jaime. Solo. $500 and thirty days. You can read the whole story above.</p>
+      </div>
+      <div class="faq__item">
+        <h3 class="faq__q">What if I hate it?</h3>
+        <p class="faq__a">Don't use it. Delete it. No hooks, no dark patterns, no guilt trips. That's the whole point.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Final CTA -->
 <section class="final">
   <div class="final__inner">
@@ -366,6 +414,39 @@
 <!-- Persistent corner companion -->
 <div class="onyx-corner" id="onyx-corner">
   <canvas id="onyx-corner-canvas" width="32" height="32"></canvas>
+</div>
+
+<!-- Sticky bottom CTA -->
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar__inner">
+    <span class="sticky-bar__text">Reserve your spot — takes 4 seconds</span>
+    <form class="sticky-bar__form" id="waitlist-sticky">
+      <input type="email" placeholder="you@somewhere.com" required autocomplete="email">
+      <button type="submit">I'm in</button>
+    </form>
+    <button class="sticky-bar__close" id="sticky-close" aria-label="Dismiss">&times;</button>
+  </div>
+</div>
+
+<!-- Referral modal -->
+<div class="ref-modal" id="ref-modal">
+  <div class="ref-modal__backdrop" id="ref-backdrop"></div>
+  <div class="ref-modal__card">
+    <div class="ref-modal__check">&#10003;</div>
+    <h3 class="ref-modal__title">You're #<span id="ref-pos">348</span> on the list.</h3>
+    <p class="ref-modal__body">Want to jump ahead? Share your link&mdash;move up 10 spots for every friend who joins.</p>
+    <div class="ref-modal__link">
+      <input type="text" id="ref-url" readonly>
+      <button id="ref-copy">Copy</button>
+    </div>
+    <div class="ref-modal__share">
+      <a id="ref-twitter" class="ref-btn" target="_blank" rel="noopener">Twitter</a>
+      <a id="ref-whatsapp" class="ref-btn" target="_blank" rel="noopener">WhatsApp</a>
+      <a id="ref-sms" class="ref-btn">iMessage</a>
+    </div>
+    <p class="ref-modal__math">#<span id="ref-now">348</span> now &rarr; #<span id="ref-potential">298</span> with 5 referrals</p>
+    <button class="ref-modal__close" id="ref-close">Got it</button>
+  </div>
 </div>
 
 <script src="script.js"></script>

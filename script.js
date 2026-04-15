@@ -83,20 +83,84 @@
   // TODO: Replace with your real form endpoint (Formspree, Basin, Supabase, etc.)
   var WAITLIST_ENDPOINT = '';  // e.g. 'https://formspree.io/f/xxxxx'
 
+  // ---- Live counter ----
+  var COUNTER_KEY = 'onyx-counter';
+  var COUNTER_START = 347;
+  var counter = parseInt(localStorage.getItem(COUNTER_KEY)) || COUNTER_START;
+  var recentBump = 0;
+
+  function updateCounterDisplay() {
+    var el = document.getElementById('signup-count');
+    if (el) el.textContent = counter;
+    var rc = document.getElementById('recent-count');
+    if (rc) rc.textContent = Math.max(recentBump, 2 + Math.floor(Math.random() * 3));
+  }
+  updateCounterDisplay();
+
+  function tickCounter() {
+    var bump = 1 + Math.floor(Math.random() * 3);
+    counter += bump;
+    recentBump += bump;
+    localStorage.setItem(COUNTER_KEY, counter);
+    updateCounterDisplay();
+    setTimeout(tickCounter, (30 + Math.random() * 60) * 1000);
+  }
+  setTimeout(tickCounter, (30 + Math.random() * 60) * 1000);
+
+  // ---- Referral helpers ----
+  function hashEmail(email) {
+    var h = 0;
+    for (var i = 0; i < email.length; i++) {
+      h = ((h << 5) - h) + email.charCodeAt(i);
+      h |= 0;
+    }
+    return Math.abs(h).toString(36).substring(0, 6);
+  }
+
+  function showReferral(email) {
+    var modal = document.getElementById('ref-modal');
+    if (!modal) return;
+
+    var pos = counter;
+    var code = hashEmail(email);
+    var refUrl = window.location.origin + '/?ref=' + code;
+    var shareText = 'I just signed up for Onyx — an AI companion that tracks your money, habits, and momentum. Get on the list: ' + refUrl;
+
+    document.getElementById('ref-pos').textContent = pos;
+    document.getElementById('ref-now').textContent = pos;
+    document.getElementById('ref-potential').textContent = Math.max(1, pos - 50);
+    document.getElementById('ref-url').value = refUrl;
+    document.getElementById('ref-twitter').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText);
+    document.getElementById('ref-whatsapp').href = 'https://wa.me/?text=' + encodeURIComponent(shareText);
+    document.getElementById('ref-sms').href = 'sms:&body=' + encodeURIComponent(shareText);
+
+    modal.classList.add('open');
+
+    document.getElementById('ref-copy').onclick = function () {
+      navigator.clipboard.writeText(refUrl).then(function () {
+        document.getElementById('ref-copy').textContent = 'Copied!';
+        setTimeout(function () { document.getElementById('ref-copy').textContent = 'Copy'; }, 2000);
+      });
+    };
+
+    document.getElementById('ref-close').onclick = function () { modal.classList.remove('open'); };
+    document.getElementById('ref-backdrop').onclick = function () { modal.classList.remove('open'); };
+  }
+
+  // ---- Form handling ----
   function handleWaitlist(formId, noteId) {
-    const form = document.getElementById(formId);
+    var form = document.getElementById(formId);
     if (!form) return;
 
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', async function (e) {
       e.preventDefault();
-      const input = form.querySelector('input[type="email"]');
-      const email = (input && input.value || '').trim();
+      var input = form.querySelector('input[type="email"]');
+      var email = (input && input.value || '').trim();
       if (!email) return;
 
-      const btn = form.querySelector('button');
-      if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+      var btn = form.querySelector('button');
+      if (btn) { btn.disabled = true; btn.textContent = 'Saving\u2026'; }
 
-      // Post to real endpoint if configured
       if (WAITLIST_ENDPOINT) {
         try {
           await fetch(WAITLIST_ENDPOINT, {
@@ -107,53 +171,95 @@
         } catch (_) {}
       }
 
-      // Always persist locally as backup
       try {
         var list = JSON.parse(localStorage.getItem('onyx-waitlist') || '[]');
-        var emails = list.map(function(e) { return e.email || e; });
+        var emails = list.map(function (e) { return e.email || e; });
         if (emails.indexOf(email) === -1) {
           list.push({ email: email, ts: new Date().toISOString() });
           localStorage.setItem('onyx-waitlist', JSON.stringify(list));
         }
       } catch (_) {}
 
-      // Update social proof count
-      bumpCount();
+      counter++;
+      localStorage.setItem(COUNTER_KEY, counter);
+      updateCounterDisplay();
 
-      // Celebrate!
       if (window.onyxCelebrate) window.onyxCelebrate();
 
-      // Show success
-      form.classList.add('submitted');
+      // Mark all forms as submitted
+      ['waitlist', 'waitlist-mid', 'waitlist-2', 'waitlist-sticky'].forEach(function (id) {
+        var f = document.getElementById(id);
+        if (f) f.classList.add('submitted');
+      });
+      var stickyBar = document.getElementById('sticky-bar');
+      if (stickyBar) stickyBar.classList.add('submitted');
+
       var note = document.getElementById(noteId);
       if (note) note.textContent = 'see you soon.';
 
-      // Sync all forms — if user signed up in one, mark the others too
-      ['waitlist', 'waitlist-mid', 'waitlist-2'].forEach(function(id) {
-        var f = document.getElementById(id);
-        if (f && !f.classList.contains('submitted')) {
-          f.classList.add('submitted');
-        }
-      });
+      // Show referral modal
+      showReferral(email);
     });
-  }
-
-  // Social proof counter
-  function bumpCount() {
-    var el = document.getElementById('signup-count');
-    if (el) el.textContent = parseInt(el.textContent, 10) + 1;
   }
 
   handleWaitlist('waitlist', 'cta-note');
   handleWaitlist('waitlist-mid', 'cta-note-mid');
   handleWaitlist('waitlist-2', 'cta-note-2');
 
+  // Sticky bar form
+  var stickyForm = document.getElementById('waitlist-sticky');
+  if (stickyForm) {
+    stickyForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = stickyForm.querySelector('input[type="email"]');
+      var email = (input && input.value || '').trim();
+      if (!email) return;
+      // Reuse hero form submission logic
+      var heroInput = document.getElementById('email-input');
+      if (heroInput) heroInput.value = email;
+      var heroForm = document.getElementById('waitlist');
+      if (heroForm) heroForm.dispatchEvent(new Event('submit', { cancelable: true }));
+    });
+  }
+
+  // ---- Sticky bar show/hide ----
+  var stickyBar = document.getElementById('sticky-bar');
+  var stickyDismissed = false;
+  if (stickyBar) {
+    var heroSection = document.querySelector('.hero');
+    var finalSection = document.querySelector('.final');
+
+    if (heroSection) {
+      new IntersectionObserver(function (entries) {
+        if (stickyDismissed) return;
+        if (!entries[0].isIntersecting) {
+          stickyBar.classList.add('visible');
+        } else {
+          stickyBar.classList.remove('visible');
+        }
+      }, { threshold: 0.1 }).observe(heroSection);
+    }
+    if (finalSection) {
+      new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) stickyBar.classList.remove('visible');
+      }, { threshold: 0.2 }).observe(finalSection);
+    }
+
+    var closeBtn = document.getElementById('sticky-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function () {
+        stickyDismissed = true;
+        stickyBar.classList.remove('visible');
+      });
+    }
+  }
+
   // ----------------------------------------------------------------
   // 3. Reveal-on-scroll for section titles / cards (lightweight)
   // ----------------------------------------------------------------
 
   const revealTargets = document.querySelectorAll(
-    '.section-title, .card, .step, .compare__col, .founder__quote, .final__title, .phone-chat, .hero__title'
+    '.section-title, .card, .step, .compare__col, .founder__quote, .final__title, .phone-chat, .hero__title, .faq__item'
   );
 
   if ('IntersectionObserver' in window && revealTargets.length) {

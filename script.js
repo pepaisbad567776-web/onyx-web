@@ -80,40 +80,70 @@
   // 2. Waitlist form handling
   // ----------------------------------------------------------------
 
-  function handleWaitlist(formId) {
+  // TODO: Replace with your real form endpoint (Formspree, Basin, Supabase, etc.)
+  var WAITLIST_ENDPOINT = '';  // e.g. 'https://formspree.io/f/xxxxx'
+
+  function handleWaitlist(formId, noteId) {
     const form = document.getElementById(formId);
     if (!form) return;
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const input = form.querySelector('input[type="email"]');
       const email = (input && input.value || '').trim();
-
       if (!email) return;
 
-      // Persist locally so page remembers (MVP; replace with API call)
-      try {
-        const list = JSON.parse(localStorage.getItem('onyx-waitlist') || '[]');
-        if (!list.includes(email)) {
-          list.push({
-            email,
-            ts: new Date().toISOString()
+      const btn = form.querySelector('button');
+      if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+
+      // Post to real endpoint if configured
+      if (WAITLIST_ENDPOINT) {
+        try {
+          await fetch(WAITLIST_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ email: email, source: 'landing' })
           });
+        } catch (_) {}
+      }
+
+      // Always persist locally as backup
+      try {
+        var list = JSON.parse(localStorage.getItem('onyx-waitlist') || '[]');
+        var emails = list.map(function(e) { return e.email || e; });
+        if (emails.indexOf(email) === -1) {
+          list.push({ email: email, ts: new Date().toISOString() });
           localStorage.setItem('onyx-waitlist', JSON.stringify(list));
         }
       } catch (_) {}
 
-      form.classList.add('submitted');
+      // Update social proof count
+      bumpCount();
 
-      // Find and blank the accompanying note
-      const noteId = formId === 'waitlist' ? 'cta-note' : 'cta-note-2';
-      const note = document.getElementById(noteId);
+      // Show success
+      form.classList.add('submitted');
+      var note = document.getElementById(noteId);
       if (note) note.textContent = 'see you soon.';
+
+      // Sync all forms — if user signed up in one, mark the others too
+      ['waitlist', 'waitlist-mid', 'waitlist-2'].forEach(function(id) {
+        var f = document.getElementById(id);
+        if (f && !f.classList.contains('submitted')) {
+          f.classList.add('submitted');
+        }
+      });
     });
   }
 
-  handleWaitlist('waitlist');
-  handleWaitlist('waitlist-2');
+  // Social proof counter
+  function bumpCount() {
+    var el = document.getElementById('signup-count');
+    if (el) el.textContent = parseInt(el.textContent, 10) + 1;
+  }
+
+  handleWaitlist('waitlist', 'cta-note');
+  handleWaitlist('waitlist-mid', 'cta-note-mid');
+  handleWaitlist('waitlist-2', 'cta-note-2');
 
   // ----------------------------------------------------------------
   // 3. Reveal-on-scroll for section titles / cards (lightweight)

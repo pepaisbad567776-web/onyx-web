@@ -1150,6 +1150,9 @@ button:focus-visible {
   .faq { padding: 72px 0; }
   .faq__q { font-size: 19px; }
   .founder__avatar { width: 48px; height: 48px; font-size: 26px; }
+  .talk { padding: 72px 0; }
+  .talk__row { flex-direction: column; }
+  .talk__row button { width: 100%; justify-content: center; }
   .sticky-bar__text { display: none; }
   .sticky-bar__inner { gap: 10px; }
   .footer__inner { flex-direction: column; gap: 24px; }
@@ -1347,6 +1350,111 @@ button:focus-visible {
   color: var(--text-3);
 }
 .screen__tabs .active { color: var(--gold); }
+
+/* =========================================================
+   Talk to us — feedback section
+   ========================================================= */
+
+.talk {
+  padding: 120px 0;
+  background: var(--bg-2);
+  border-top: 1px solid var(--line);
+}
+.talk__inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 32px;
+  text-align: center;
+}
+.talk__intro {
+  max-width: 480px;
+  margin: 0 auto 48px;
+}
+.talk .section-title { margin-bottom: 24px; }
+.talk__form {
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: left;
+}
+.talk__form textarea {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  padding: 16px 18px;
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text);
+  resize: vertical;
+  outline: none;
+  min-height: 130px;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+.talk__form textarea:focus { border-color: var(--gold-dim); }
+.talk__form textarea::placeholder { color: var(--text-3); line-height: 1.5; }
+.talk__row {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+.talk__row input {
+  flex: 1;
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.talk__row input:focus { border-color: var(--gold-dim); }
+.talk__row input::placeholder { color: var(--text-3); }
+.talk__row button {
+  background: var(--gold);
+  color: var(--bg);
+  border: none;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s, transform 0.15s;
+  white-space: nowrap;
+}
+.talk__row button:hover { background: var(--gold-hover); transform: translateX(1px); }
+.talk__row button svg { transition: transform 0.15s; }
+.talk__row button:hover svg { transform: translateX(2px); }
+.talk__note {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-top: 16px;
+  text-align: center;
+}
+.talk__form.submitted textarea,
+.talk__form.submitted .talk__row { display: none; }
+.talk__form.submitted .talk__note {
+  color: var(--gold);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  font-family: var(--sans);
+  padding: 40px 20px;
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 12px;
+  background: rgba(201,168,76,0.04);
+}
 
 /* =========================================================
    Build log

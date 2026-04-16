@@ -232,6 +232,50 @@
   handleWaitlist('waitlist-mid', 'cta-note-mid');
   handleWaitlist('waitlist-2', 'cta-note-2');
 
+  // Talk to Jaime — feedback form
+  var talkForm = document.getElementById('talk-form');
+  if (talkForm) {
+    talkForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var msgEl = document.getElementById('talk-message');
+      var emailEl = document.getElementById('talk-email');
+      var msg = (msgEl && msgEl.value || '').trim();
+      var email = (emailEl && emailEl.value || '').trim();
+      if (!msg) return;
+
+      var btn = talkForm.querySelector('button');
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending\u2026'; }
+
+      var fbPayload = {
+        source: 'feedback',
+        message: msg,
+        email: email || 'anonymous',
+        ref: referredBy,
+        timestamp: new Date().toISOString(),
+      };
+
+      if (WAITLIST_ENDPOINT) {
+        try {
+          await fetch(WAITLIST_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(fbPayload)
+          });
+        } catch (_) {}
+      }
+
+      try {
+        var fbList = JSON.parse(localStorage.getItem('onyx-feedback') || '[]');
+        fbList.push(fbPayload);
+        localStorage.setItem('onyx-feedback', JSON.stringify(fbList));
+      } catch (_) {}
+
+      talkForm.classList.add('submitted');
+      var note = document.getElementById('talk-note');
+      if (note) note.textContent = '\u2713  message sent. jaime will see it.';
+    });
+  }
+
   // Sticky bar form
   var stickyForm = document.getElementById('waitlist-sticky');
   if (stickyForm) {
@@ -285,7 +329,7 @@
   // ----------------------------------------------------------------
 
   const revealTargets = document.querySelectorAll(
-    '.section-title, .card, .step, .compare__col, .founder__quote, .final__title, .phone-chat, .hero__title, .faq__item, .product-phone, .buildlog__entry, .buildlog__title'
+    '.section-title, .card, .step, .compare__col, .founder__quote, .final__title, .phone-chat, .hero__title, .faq__item, .product-phone, .buildlog__entry, .buildlog__title, .talk__form'
   );
 
   if ('IntersectionObserver' in window && revealTargets.length) {

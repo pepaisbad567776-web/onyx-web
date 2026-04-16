@@ -93,7 +93,7 @@
   // Setup: https://formspree.io -> new form -> copy "endpoint URL"
   // Until this is filled in, emails only persist in browser localStorage.
   // ===================================================================
-  var WAITLIST_ENDPOINT = '';  // e.g. 'https://formspree.io/f/mqkvwaeg'
+  var WAITLIST_ENDPOINT = 'https://formspree.io/f/xqewpyov';
 
   if (!WAITLIST_ENDPOINT && typeof console !== 'undefined') {
     console.warn('[Onyx] WAITLIST_ENDPOINT not configured — signups are local-only. See script.js line ~97.');

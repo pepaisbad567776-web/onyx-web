@@ -88,8 +88,20 @@
   // 2. Waitlist form handling
   // ----------------------------------------------------------------
 
-  // TODO: Replace with your real form endpoint (Formspree, Basin, Supabase, etc.)
-  var WAITLIST_ENDPOINT = '';  // e.g. 'https://formspree.io/f/xxxxx'
+  // ===================================================================
+  // WAITLIST ENDPOINT — paste your Formspree URL between the quotes
+  // Setup: https://formspree.io -> new form -> copy "endpoint URL"
+  // Until this is filled in, emails only persist in browser localStorage.
+  // ===================================================================
+  var WAITLIST_ENDPOINT = '';  // e.g. 'https://formspree.io/f/mqkvwaeg'
+
+  if (!WAITLIST_ENDPOINT && typeof console !== 'undefined') {
+    console.warn('[Onyx] WAITLIST_ENDPOINT not configured — signups are local-only. See script.js line ~97.');
+  }
+
+  // Capture ?ref= parameter for referral attribution
+  var urlParams = new URLSearchParams(window.location.search);
+  var referredBy = urlParams.get('ref') || null;
 
   // ---- Live counter ----
   var COUNTER_KEY = 'onyx-counter';
@@ -167,12 +179,20 @@
       var btn = form.querySelector('button');
       if (btn) { btn.disabled = true; btn.textContent = 'Saving\u2026'; }
 
+      var payload = {
+        email: email,
+        source: formId,
+        ref: referredBy,
+        position: counter,
+        timestamp: new Date().toISOString(),
+      };
+
       if (WAITLIST_ENDPOINT) {
         try {
           await fetch(WAITLIST_ENDPOINT, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-            body: JSON.stringify({ email: email, source: 'landing' })
+            body: JSON.stringify(payload)
           });
         } catch (_) {}
       }
@@ -181,7 +201,7 @@
         var list = JSON.parse(localStorage.getItem('onyx-waitlist') || '[]');
         var emails = list.map(function (e) { return e.email || e; });
         if (emails.indexOf(email) === -1) {
-          list.push({ email: email, ts: new Date().toISOString() });
+          list.push(payload);
           localStorage.setItem('onyx-waitlist', JSON.stringify(list));
         }
       } catch (_) {}

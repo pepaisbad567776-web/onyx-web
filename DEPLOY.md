@@ -72,48 +72,75 @@ URL: `https://<YOUR_USERNAME>.github.io/onyx-web/` — live in ~1 min.
 - [ ] Drop a favicon in the root (even a 32x32 gold "O" on black works)
 - [ ] Decide if you want real email capture before sharing the link publicly
 
-## Real email capture (swap `localStorage` for a backend)
+## Real email capture — Formspree setup (5 minutes)
 
-Right now the waitlist form stores emails in the browser's `localStorage`. That's a demo placeholder. To actually collect emails, pick one:
+Right now the waitlist form posts to an empty endpoint, so emails only persist in the visitor's own `localStorage`. To actually receive signups, wire up Formspree:
 
-### Fastest: a form endpoint (no backend needed)
+### 1. Create a Formspree form
 
-- [**Basin**](https://usebasin.com) — 100 submissions/mo free
-- [**Getform**](https://getform.io) — 50 submissions/mo free
-- [**Formspree**](https://formspree.io) — 50 submissions/mo free
+1. Go to [formspree.io](https://formspree.io) → sign up (free, email + password)
+2. Click **New Form** → name it `Onyx Waitlist`
+3. Set the submit email to wherever you want signups delivered
+4. Copy the endpoint URL — looks like `https://formspree.io/f/xxxxxxx`
 
-Sign up, they give you a URL. Open `script.js` and change the form handler to:
+### 2. Paste it into the code
+
+Open `script.js`, find this line (near the top):
 
 ```js
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = form.querySelector('input[type="email"]').value.trim();
-  if (!email) return;
-
-  await fetch('https://YOUR-BASIN-URL-HERE', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify({ email, source: 'landing' })
-  });
-
-  form.classList.add('submitted');
-});
+var WAITLIST_ENDPOINT = '';  // e.g. 'https://formspree.io/f/mqkvwaeg'
 ```
 
-### Better long-term: Supabase
+Paste your URL between the quotes:
 
-When you're building the PWA anyway, point the form at the same Supabase instance. One table:
+```js
+var WAITLIST_ENDPOINT = 'https://formspree.io/f/xxxxxxx';
+```
+
+### 3. Push
+
+```bash
+git add script.js
+git commit -m "wire formspree endpoint"
+git push
+```
+
+Vercel auto-deploys in ~30 seconds. From this point forward, every signup lands in your Formspree inbox with:
+
+- `email` — what they submitted
+- `source` — which form (hero / mid-page / final / sticky)
+- `ref` — referral code (if they arrived via a friend's `?ref=` link)
+- `position` — their position on the waitlist counter
+- `timestamp` — when they signed up
+
+### 4. Test it
+
+Open the live site, use the hero form, check your Formspree dashboard. You'll see the submission with all the fields above. Confirm the email you set lands in your inbox.
+
+### Limits
+
+Formspree free tier: **50 submissions/month**. When you outgrow it, swap to:
+
+- [**Basin**](https://usebasin.com) — 100/mo free
+- [**Getform**](https://getform.io) — 50/mo free
+- **Supabase** — unlimited with a real database (see below)
+
+### Long-term: Supabase
+
+When you're building the PWA, point the form at your Supabase instance. One table:
 
 ```sql
 create table waitlist (
   id uuid primary key default gen_random_uuid(),
   email text unique not null,
   source text,
+  ref text,
+  position int,
   created_at timestamptz default now()
 );
 ```
 
-Expose via the Supabase JS client or REST endpoint. Dump the list whenever.
+Then swap the `fetch` URL in `script.js` to your Supabase REST endpoint. Same payload shape, so no code changes needed elsewhere.
 
 ---
 

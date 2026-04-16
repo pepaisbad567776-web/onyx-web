@@ -259,7 +259,7 @@
   // ----------------------------------------------------------------
 
   const revealTargets = document.querySelectorAll(
-    '.section-title, .card, .step, .compare__col, .founder__quote, .final__title, .phone-chat, .hero__title, .faq__item'
+    '.section-title, .card, .step, .compare__col, .founder__quote, .final__title, .phone-chat, .hero__title, .faq__item, .product-phone'
   );
 
   if ('IntersectionObserver' in window && revealTargets.length) {

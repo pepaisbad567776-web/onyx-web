@@ -625,7 +625,7 @@ button:focus-visible {
 
 .onyx-corner__hint {
   position: absolute;
-  right: calc(100% + 12px);
+  right: calc(100% + 10px);
   top: 50%;
   transform: translateY(-50%);
   background: var(--surface);
@@ -638,13 +638,14 @@ button:focus-visible {
   text-transform: uppercase;
   color: var(--text-2);
   white-space: nowrap;
-  opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  opacity: 0.75;
+  transition: opacity 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 .onyx-corner:hover .onyx-corner__hint {
   opacity: 1;
-  transform: translateY(-50%) translateX(-4px);
+  border-color: var(--gold);
+  color: var(--gold);
 }
 
 /* =========================================================

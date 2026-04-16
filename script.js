@@ -232,7 +232,45 @@
   handleWaitlist('waitlist-mid', 'cta-note-mid');
   handleWaitlist('waitlist-2', 'cta-note-2');
 
-  // Talk to Jaime — feedback form
+  // ---- Talk modal (corner Onyx click) ----
+  var cornerBtn = document.getElementById('onyx-corner');
+  var talkMod = document.getElementById('talk-modal');
+  if (cornerBtn && talkMod) {
+    cornerBtn.addEventListener('click', function () { talkMod.classList.add('open'); });
+    document.getElementById('talk-modal-backdrop').addEventListener('click', function () { talkMod.classList.remove('open'); });
+    document.getElementById('talk-modal-x').addEventListener('click', function () { talkMod.classList.remove('open'); });
+  }
+
+  // Escape key closes all modals
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      var rm = document.getElementById('ref-modal');
+      if (rm && rm.classList.contains('open')) rm.classList.remove('open');
+      if (talkMod && talkMod.classList.contains('open')) talkMod.classList.remove('open');
+    }
+  });
+
+  // Talk modal form handler
+  var talkModForm = document.getElementById('talk-modal-form');
+  if (talkModForm) {
+    talkModForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var msg = (document.getElementById('talk-modal-msg').value || '').trim();
+      var email = (document.getElementById('talk-modal-email').value || '').trim();
+      if (!msg) return;
+      var btn = talkModForm.querySelector('button');
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending\u2026'; }
+      var p = { source: 'feedback', message: msg, email: email || 'anonymous', ref: referredBy, timestamp: new Date().toISOString() };
+      if (WAITLIST_ENDPOINT) {
+        try { await fetch(WAITLIST_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(p) }); } catch (_) {}
+      }
+      talkModForm.classList.add('submitted');
+      var note = document.getElementById('talk-modal-note');
+      if (note) note.textContent = '\u2713  message sent. jaime will see it.';
+    });
+  }
+
+  // Talk to Jaime — inline feedback form
   var talkForm = document.getElementById('talk-form');
   if (talkForm) {
     talkForm.addEventListener('submit', async function (e) {

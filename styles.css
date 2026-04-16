@@ -587,15 +587,21 @@ button:focus-visible {
   position: relative;
 }
 
-/* Persistent corner companion */
+/* Persistent corner companion — clickable */
 .onyx-corner {
   position: fixed;
   bottom: 24px;
   right: 24px;
   z-index: 40;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.2s ease;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  -webkit-appearance: none;
+  appearance: none;
 }
+.onyx-corner:hover { transform: translateY(-2px); }
 .onyx-corner canvas {
   width: 64px;
   height: 64px;
@@ -615,6 +621,162 @@ button:focus-visible {
 @keyframes cornerGlow {
   0%, 100% { opacity: 0.4; transform: scale(0.92); }
   50% { opacity: 1; transform: scale(1.08); }
+}
+
+.onyx-corner__hint {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  padding: 7px 12px;
+  border-radius: 100px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.onyx-corner:hover .onyx-corner__hint {
+  opacity: 1;
+  transform: translateY(-50%) translateX(-4px);
+}
+
+/* =========================================================
+   Talk modal (opened from corner Onyx)
+   ========================================================= */
+
+.talk-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.talk-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.talk-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+}
+.talk-modal__card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 18px;
+  padding: 40px 36px 32px;
+  max-width: 460px;
+  width: 90%;
+}
+.talk-modal__x {
+  position: absolute;
+  top: 14px; right: 16px;
+  background: none;
+  border: none;
+  color: var(--text-3);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+.talk-modal__x:hover { color: var(--text); }
+.talk-modal__title {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+.talk-modal__title em { color: var(--gold); font-style: italic; }
+.talk-modal__sub {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--text-2);
+  margin-bottom: 22px;
+}
+.talk-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.talk-modal__form textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+  resize: vertical;
+  outline: none;
+  min-height: 100px;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+.talk-modal__form textarea:focus { border-color: var(--gold-dim); }
+.talk-modal__form textarea::placeholder { color: var(--text-3); }
+.talk-modal__form input {
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.talk-modal__form input:focus { border-color: var(--gold-dim); }
+.talk-modal__form input::placeholder { color: var(--text-3); }
+.talk-modal__form button {
+  background: var(--gold);
+  color: var(--bg);
+  border: none;
+  padding: 13px 22px;
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.talk-modal__form button:hover { background: var(--gold-hover); }
+.talk-modal__note {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-top: 14px;
+  text-align: center;
+}
+.talk-modal__form.submitted textarea,
+.talk-modal__form.submitted input,
+.talk-modal__form.submitted button { display: none; }
+.talk-modal__form.submitted + .talk-modal__note {
+  color: var(--gold);
+  font-size: 14px;
+  font-family: var(--sans);
+  text-transform: none;
+  letter-spacing: 0.02em;
+  padding-top: 20px;
 }
 
 /* =========================================================

@@ -397,6 +397,43 @@
   </div>
 </section>
 
+<!-- Talk to Jaime — direct feedback channel -->
+<section class="talk" id="talk">
+  <div class="talk__inner">
+    <div class="section-label">// talk to us</div>
+    <h2 class="section-title">
+      Tell Jaime<br>
+      <em>what you need.</em>
+    </h2>
+    <p class="section-body talk__intro">
+      This isn't a FAQ bot. Jaime reads every message.
+      If there's something Onyx needs to do &mdash; or not do &mdash; he wants to hear it.
+    </p>
+
+    <form class="talk__form" id="talk-form">
+      <textarea
+        id="talk-message"
+        rows="5"
+        placeholder="what you're trying to figure out. what the other apps got wrong. what would actually help..."
+        required></textarea>
+      <div class="talk__row">
+        <input
+          type="email"
+          id="talk-email"
+          placeholder="your email (optional &mdash; only if you want a reply)"
+          autocomplete="email">
+        <button type="submit">
+          Send it
+          <svg width="14" height="12" viewBox="0 0 14 12" fill="none" aria-hidden="true"><path d="M8 1L13 6L8 11M13 6H0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="talk__note" id="talk-note">
+        Goes straight to Jaime's inbox. No AI, no form bot.
+      </div>
+    </form>
+  </div>
+</section>
+
 <!-- Build log — shipping in public -->
 <section class="buildlog" id="buildlog">
   <div class="buildlog__inner">
@@ -478,43 +515,6 @@
   </div>
 </section>
 
-<!-- Talk to Jaime — direct feedback channel -->
-<section class="talk" id="talk">
-  <div class="talk__inner">
-    <div class="section-label">// talk to us</div>
-    <h2 class="section-title">
-      Tell Jaime<br>
-      <em>what you need.</em>
-    </h2>
-    <p class="section-body talk__intro">
-      This isn't a FAQ bot. Jaime reads every message.
-      If there's something Onyx needs to do &mdash; or not do &mdash; he wants to hear it.
-    </p>
-
-    <form class="talk__form" id="talk-form">
-      <textarea
-        id="talk-message"
-        rows="5"
-        placeholder="what you're trying to figure out. what the other apps got wrong. what would actually help..."
-        required></textarea>
-      <div class="talk__row">
-        <input
-          type="email"
-          id="talk-email"
-          placeholder="your email (optional &mdash; only if you want a reply)"
-          autocomplete="email">
-        <button type="submit">
-          Send it
-          <svg width="14" height="12" viewBox="0 0 14 12" fill="none" aria-hidden="true"><path d="M8 1L13 6L8 11M13 6H0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-      <div class="talk__note" id="talk-note">
-        Goes straight to Jaime's inbox. No AI, no form bot.
-      </div>
-    </form>
-  </div>
-</section>
-
 <!-- Final CTA -->
 <section class="final">
   <div class="final__inner">
@@ -553,9 +553,26 @@
   </div>
 </footer>
 
-<!-- Persistent corner companion -->
-<div class="onyx-corner" id="onyx-corner">
+<!-- Persistent corner companion (clickable → opens talk modal) -->
+<button class="onyx-corner" id="onyx-corner" aria-label="Send feedback to Jaime">
   <canvas id="onyx-corner-canvas" width="32" height="32"></canvas>
+  <span class="onyx-corner__hint">talk to onyx</span>
+</button>
+
+<!-- Talk modal (opened from corner Onyx) -->
+<div class="talk-modal" id="talk-modal">
+  <div class="talk-modal__backdrop" id="talk-modal-backdrop"></div>
+  <div class="talk-modal__card">
+    <button class="talk-modal__x" id="talk-modal-x" aria-label="Close">&times;</button>
+    <h3 class="talk-modal__title">Tell Jaime<br><em>what you need.</em></h3>
+    <p class="talk-modal__sub">Real inbox. Real human. Reads every message.</p>
+    <form class="talk-modal__form" id="talk-modal-form">
+      <textarea id="talk-modal-msg" rows="4" placeholder="what you're trying to figure out..." required></textarea>
+      <input type="email" id="talk-modal-email" placeholder="your email (optional)" autocomplete="email">
+      <button type="submit">Send it</button>
+    </form>
+    <div class="talk-modal__note" id="talk-modal-note">Goes straight to Jaime. No bots.</div>
+  </div>
 </div>
 
 <!-- Sticky bottom CTA -->

@@ -22,7 +22,6 @@
     function typeLine(line, text, speed = 22) {
       return new Promise(resolve => {
         line.classList.add('visible');
-        // Strip the "onyx " prefix — it's added via CSS ::before
         line.textContent = '';
         let i = 0;
         const tick = () => {
@@ -42,25 +41,34 @@
       if (started) return;
       started = true;
 
-      // Reveal system lines first (instant)
-      for (let i = 0; i < systemLines.length; i++) {
-        await new Promise(r => setTimeout(r, 350));
-        systemLines[i].classList.add('visible');
-      }
+      // Loop forever — terminal is never "done"
+      while (true) {
+        // Reset all lines
+        lines.forEach(l => l.classList.remove('visible'));
+        typedLines.forEach(l => { l.textContent = ''; });
 
-      await new Promise(r => setTimeout(r, 600));
+        await new Promise(r => setTimeout(r, 500));
 
-      // Type Onyx lines sequentially
-      for (const line of typedLines) {
-        const text = line.getAttribute('data-text') || '';
-        await typeLine(line, text);
+        for (let i = 0; i < systemLines.length; i++) {
+          await new Promise(r => setTimeout(r, 320));
+          systemLines[i].classList.add('visible');
+        }
+
         await new Promise(r => setTimeout(r, 550));
-      }
 
-      // Reveal input line
-      if (inputLine) {
-        await new Promise(r => setTimeout(r, 300));
-        inputLine.classList.add('visible');
+        for (const line of typedLines) {
+          const text = line.getAttribute('data-text') || '';
+          await typeLine(line, text);
+          await new Promise(r => setTimeout(r, 480));
+        }
+
+        if (inputLine) {
+          await new Promise(r => setTimeout(r, 300));
+          inputLine.classList.add('visible');
+        }
+
+        // Pause before looping (cursor blinks alive during this time)
+        await new Promise(r => setTimeout(r, 10000));
       }
     }
 
@@ -127,8 +135,6 @@
     var shareText = 'I just signed up for Onyx — an AI companion that tracks your money, habits, and momentum. Get on the list: ' + refUrl;
 
     document.getElementById('ref-pos').textContent = pos;
-    document.getElementById('ref-now').textContent = pos;
-    document.getElementById('ref-potential').textContent = Math.max(1, pos - 50);
     document.getElementById('ref-url').value = refUrl;
     document.getElementById('ref-twitter').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText);
     document.getElementById('ref-whatsapp').href = 'https://wa.me/?text=' + encodeURIComponent(shareText);
@@ -259,7 +265,7 @@
   // ----------------------------------------------------------------
 
   const revealTargets = document.querySelectorAll(
-    '.section-title, .card, .step, .compare__col, .founder__quote, .final__title, .phone-chat, .hero__title, .faq__item, .product-phone'
+    '.section-title, .card, .step, .compare__col, .founder__quote, .final__title, .phone-chat, .hero__title, .faq__item, .product-phone, .buildlog__entry, .buildlog__title'
   );
 
   if ('IntersectionObserver' in window && revealTargets.length) {

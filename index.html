@@ -61,10 +61,13 @@
       <span class="title__line">who <em>pays</em> attention.</span>
     </h1>
 
+    <p class="hero__subtitle">
+      A personal AI that tracks your <strong>money</strong>, your <strong>habits</strong>, and your <strong>momentum</strong> &mdash; and reads you the truth every morning.
+    </p>
+
     <p class="hero__body">
-      Most apps make you log your life. Onyx already knows it. Your money.
-      Your habits. The 3&nbsp;AM scrolls. Onyx watches all of it — and tells you
-      the truth, every morning, without making you feel bad about any of it.
+      No guilt trips. No 40-tab dashboards. Just the friend who notices
+      before it's a problem.
     </p>
 
     <form class="cta-form" id="waitlist">
@@ -107,7 +110,10 @@
           <div class="console__dots">
             <span></span><span></span><span></span>
           </div>
-          <div class="console__title">onyx &mdash; 6:42 AM</div>
+          <div class="console__title">
+            <canvas class="onyx-sprite console__onyx" width="32" height="32" aria-hidden="true"></canvas>
+            <span>onyx &mdash; 6:42 AM</span>
+          </div>
         </div>
         <div class="console__screen" id="screen">
           <div class="line line--system"><span class="prompt">&rsaquo;</span> onyx v0.9.1 — running</div>
@@ -157,7 +163,7 @@
       <div class="onyx-stage">
         <!-- Pixel Onyx — the character -->
         <div class="onyx-pixel">
-          <canvas id="onyx-main-canvas" width="32" height="32"></canvas>
+          <canvas id="onyx-main-canvas" class="onyx-sprite" width="32" height="32"></canvas>
         </div>
 
         <!-- Phone chat simulation -->
@@ -204,7 +210,10 @@
             <span class="screen__brand">onyx &middot;</span>
           </div>
 
-          <div class="screen__greeting">good morning,<br>jaime.</div>
+          <div class="screen__greet-row">
+            <canvas class="onyx-sprite screen__onyx" width="32" height="32" aria-hidden="true"></canvas>
+            <div class="screen__greeting">good morning,<br>jaime.</div>
+          </div>
 
           <div class="screen__score">
             <div class="screen__score-label">SCORE</div>
@@ -438,7 +447,10 @@
 <section class="buildlog" id="buildlog">
   <div class="buildlog__inner">
     <div class="section-label">// build log &middot; shipping in public</div>
-    <h2 class="buildlog__title">The daily receipts.</h2>
+    <div class="buildlog__header">
+      <canvas class="onyx-sprite buildlog__onyx" width="32" height="32" aria-hidden="true"></canvas>
+      <h2 class="buildlog__title">The daily receipts.</h2>
+    </div>
     <div class="buildlog__list">
       <div class="buildlog__entry">
         <span class="buildlog__day">day 16</span>
@@ -486,6 +498,47 @@
   </div>
 </div>
 
+<!-- Pricing — honest numbers, founding cohort -->
+<section class="pricing" id="pricing">
+  <div class="pricing__inner">
+    <div class="section-label">// pricing &middot; honest numbers</div>
+    <h2 class="section-title">
+      What Onyx<br>
+      <em>will cost.</em>
+    </h2>
+    <p class="section-body pricing__intro">
+      No surprise charges. No annual lock-in. Cancel any time.
+      Here's the whole plan, on one page.
+    </p>
+
+    <div class="pricing__rows">
+      <div class="pricing__row">
+        <div class="pricing__when">During private beta</div>
+        <div class="pricing__price">Free</div>
+        <div class="pricing__note">Everyone on the waitlist gets in for nothing. No card. No trial timer.</div>
+      </div>
+
+      <div class="pricing__row">
+        <div class="pricing__when">At public launch</div>
+        <div class="pricing__price">~$8<span class="pricing__per">/mo</span></div>
+        <div class="pricing__note">One tier. Every feature. No pro/plus/premium shell game.</div>
+      </div>
+
+      <div class="pricing__row pricing__row--founding">
+        <div class="pricing__tag">Founding&nbsp;100</div>
+        <div class="pricing__when">First 100 signups, forever</div>
+        <div class="pricing__price">$4<span class="pricing__per">/mo</span></div>
+        <div class="pricing__note">Locked-in rate for life. Your $4 is what lets Onyx exist in the first place.</div>
+      </div>
+    </div>
+
+    <div class="pricing__cta">
+      <a href="#waitlist" class="pricing__cta-btn">Claim a founding spot &rarr;</a>
+      <div class="pricing__cta-note">First 100 only. After that, standard pricing applies.</div>
+    </div>
+  </div>
+</section>
+
 <!-- FAQ — objection handling -->
 <section class="faq">
   <div class="faq__inner">
@@ -497,7 +550,7 @@
       </div>
       <div class="faq__item">
         <h3 class="faq__q">How much will it cost?</h3>
-        <p class="faq__a">Free to start. Pro tier for people who want the full companion. Honest pricing when we ship.</p>
+        <p class="faq__a">Free during private beta. ~$8/mo at launch. First 100 signups lock in $4/mo for life. <a href="#pricing">See full pricing &rarr;</a></p>
       </div>
       <div class="faq__item">
         <h3 class="faq__q">What data does Onyx see?</h3>
@@ -555,7 +608,7 @@
 
 <!-- Persistent corner companion (clickable → opens talk modal) -->
 <button class="onyx-corner" id="onyx-corner" aria-label="Send feedback to Jaime">
-  <canvas id="onyx-corner-canvas" width="32" height="32"></canvas>
+  <canvas id="onyx-corner-canvas" class="onyx-sprite" width="32" height="32"></canvas>
   <span class="onyx-corner__hint">talk to onyx</span>
 </button>
 

@@ -367,7 +367,7 @@
   // ----------------------------------------------------------------
 
   const revealTargets = document.querySelectorAll(
-    '.section-title, .card, .step, .compare__col, .founder__quote, .final__title, .phone-chat, .hero__title, .faq__item, .product-phone, .buildlog__entry, .buildlog__title, .talk__form'
+    '.section-title, .card, .step, .compare__col, .founder__quote, .final__title, .phone-chat, .hero__title, .faq__item, .product-phone, .buildlog__entry, .buildlog__title, .talk__form, .pricing__row, .pricing__cta'
   );
 
   if ('IntersectionObserver' in window && revealTargets.length) {

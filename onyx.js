@@ -46,12 +46,18 @@
   var mcx = 0, mcy = 0;
 
   // ---------- Canvas refs ----------
-  var mainC = document.getElementById('onyx-main-canvas');
-  var miniC = document.getElementById('onyx-corner-canvas');
-  var mainX = mainC ? mainC.getContext('2d') : null;
-  var miniX = miniC ? miniC.getContext('2d') : null;
+  // Primary lookup: every <canvas class="onyx-sprite">. Back-compat: legacy IDs.
+  var canvases = Array.prototype.slice.call(document.querySelectorAll('canvas.onyx-sprite'));
+  ['onyx-main-canvas', 'onyx-corner-canvas'].forEach(function (id) {
+    var c = document.getElementById(id);
+    if (c && canvases.indexOf(c) === -1) canvases.push(c);
+  });
 
-  if (!mainX && !miniX) return;
+  var contexts = canvases.map(function (c) { return c.getContext('2d'); });
+  if (!contexts.length) return;
+
+  // Main canvas kept by ID for proximity-hover perk detection.
+  var mainC = document.getElementById('onyx-main-canvas');
 
   // ---------- Draw ----------
   function draw(ctx) {
@@ -225,9 +231,8 @@
     }
     perked = hoverPerk || Date.now() < perkUntil;
 
-    // Draw both canvases
-    if (mainX) draw(mainX);
-    if (miniX) draw(miniX);
+    // Draw every registered canvas
+    for (var k = 0; k < contexts.length; k++) draw(contexts[k]);
 
     requestAnimationFrame(tick);
   }

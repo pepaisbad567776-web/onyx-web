@@ -391,6 +391,61 @@
   }
 
   // ----------------------------------------------------------------
+  // 3.5 Product time-of-day tour — Morning / Live / Night
+  // ----------------------------------------------------------------
+  (function () {
+    var times = Array.prototype.slice.call(document.querySelectorAll('.product-time'));
+    var screens = Array.prototype.slice.call(document.querySelectorAll('.screen-day'));
+    var productSection = document.getElementById('product');
+    if (!times.length || !screens.length) return;
+
+    var userInteracted = false;
+    var cycleTimer = null;
+
+    function setActive(time) {
+      times.forEach(function (t) {
+        var match = t.dataset.time === time;
+        t.classList.toggle('is-active', match);
+        t.setAttribute('aria-selected', match ? 'true' : 'false');
+      });
+      screens.forEach(function (s) {
+        s.classList.toggle('is-active', s.dataset.time === time);
+      });
+    }
+
+    times.forEach(function (t) {
+      t.addEventListener('click', function () {
+        userInteracted = true;
+        if (cycleTimer) { clearInterval(cycleTimer); cycleTimer = null; }
+        setActive(t.dataset.time);
+      });
+    });
+
+    // Auto-cycle once when section enters view (stops once user clicks)
+    if ('IntersectionObserver' in window && productSection) {
+      var started = false;
+      new IntersectionObserver(function (entries) {
+        if (started || userInteracted) return;
+        if (!entries[0].isIntersecting) return;
+        started = true;
+        var order = ['morning', 'live', 'night'];
+        var i = 0;
+        cycleTimer = setInterval(function () {
+          if (userInteracted) { clearInterval(cycleTimer); cycleTimer = null; return; }
+          i++;
+          if (i >= order.length) {
+            // End on Night so the user sees the most emotional screen
+            clearInterval(cycleTimer);
+            cycleTimer = null;
+            return;
+          }
+          setActive(order[i]);
+        }, 3800);
+      }, { threshold: 0.35 }).observe(productSection);
+    }
+  })();
+
+  // ----------------------------------------------------------------
   // 4. Conversation chat engine (char-by-char typing)
   // ----------------------------------------------------------------
 

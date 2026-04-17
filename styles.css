@@ -1332,9 +1332,13 @@ button:focus-visible {
   .nav__meta-item { display: none; }
 
   .product { padding: 80px 0; }
-  .product__intro { margin-bottom: 48px; }
+  .product__intro { margin-bottom: 32px; }
   .product-phone { width: 300px; }
   .product-phone__screen { min-height: 500px; }
+  .product-times { gap: 4px; padding: 5px; margin-bottom: 28px; }
+  .product-time { padding: 7px 12px; }
+  .product-time__when { font-size: 9px; }
+  .product-time__label { font-size: 11px; }
   .buildlog { padding: 72px 0; }
   .buildlog__entry { grid-template-columns: 70px 1fr; gap: 20px; }
   .buildlog__note { font-size: 17px; }
@@ -1407,8 +1411,8 @@ button:focus-visible {
   padding: 0 32px;
 }
 .product__intro {
-  max-width: 480px;
-  margin: 0 auto 72px;
+  max-width: 520px;
+  margin: 0 auto 40px;
 }
 .product .section-title { margin-bottom: 24px; }
 .product .section-label { margin-bottom: 28px; }
@@ -1459,6 +1463,119 @@ button:focus-visible {
   gap: 16px;
   text-align: left;
 }
+
+/* Time-of-day tabs (above the phone) */
+.product-times {
+  display: flex;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  padding: 6px;
+  width: fit-content;
+  margin: 0 auto 40px;
+}
+.product-time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  background: transparent;
+  border: none;
+  color: var(--text-3);
+  font-family: var(--mono);
+  padding: 9px 18px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  line-height: 1.2;
+}
+.product-time:hover { color: var(--text-2); }
+.product-time.is-active {
+  background: var(--gold);
+  color: var(--bg);
+}
+.product-time.is-active .product-time__when,
+.product-time.is-active .product-time__label { color: var(--bg); }
+.product-time__when {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-3);
+}
+.product-time__label {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Day screens — only one visible */
+.screen-day {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  animation: screenFade 0.4s ease;
+}
+.screen-day.is-active { display: flex; }
+@keyframes screenFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Live state — brand pulses */
+.screen__brand--live { color: var(--gold); display: inline-flex; align-items: center; gap: 5px; }
+.screen__live-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: livePulse 1.4s ease-in-out infinite;
+}
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.35; transform: scale(0.75); }
+}
+
+/* Alert card (Live mid-day) */
+.screen__alert {
+  background: linear-gradient(180deg, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.02) 100%);
+  border: 1px solid rgba(201,168,76,0.24);
+  border-radius: 14px;
+  padding: 14px 18px;
+}
+.screen__alert-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+.screen__alert-amt {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 32px;
+  color: var(--gold);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.screen__alert-when {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.screen__alert-where {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--gold-soft);
+  margin-top: 4px;
+}
+
+/* Warn stat variant */
+.screen__stat .warn { color: #d07a3a; }
 
 .screen__status {
   display: flex;

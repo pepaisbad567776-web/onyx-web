@@ -188,50 +188,134 @@
   </div>
 </section>
 
-<!-- The Product — sneak peek -->
-<section class="product">
+<!-- The Product — three moments in a day -->
+<section class="product" id="product">
   <div class="product__inner">
     <div class="section-label">// a look at the app</div>
     <h2 class="section-title">
-      What you'll see<br>
-      <em>every morning.</em>
+      Morning. Live. <em>Night.</em>
     </h2>
     <p class="section-body product__intro">
-      One screen. Honest numbers. No fourteen tabs, no feed to scroll.
-      Just the read for today.
+      Onyx shows up three times a day &mdash; a morning brief, a live nudge when it matters,
+      and a night close-out. No dashboards to check. No feed to scroll.
     </p>
+
+    <!-- Time-of-day tabs -->
+    <div class="product-times" role="tablist" aria-label="Time of day">
+      <button class="product-time is-active" data-time="morning" role="tab" aria-selected="true">
+        <span class="product-time__when">6:42 AM</span>
+        <span class="product-time__label">Morning</span>
+      </button>
+      <button class="product-time" data-time="live" role="tab" aria-selected="false">
+        <span class="product-time__when">2:18 PM</span>
+        <span class="product-time__label">Live</span>
+      </button>
+      <button class="product-time" data-time="night" role="tab" aria-selected="false">
+        <span class="product-time__when">10:47 PM</span>
+        <span class="product-time__label">Night</span>
+      </button>
+    </div>
 
     <div class="product__stage">
       <div class="product-phone">
         <div class="product-phone__notch"></div>
         <div class="product-phone__screen">
-          <div class="screen__status">
-            <span>6:42 AM</span>
-            <span class="screen__brand">onyx &middot;</span>
+
+          <!-- MORNING -->
+          <div class="screen-day is-active" data-time="morning">
+            <div class="screen__status">
+              <span>6:42 AM</span>
+              <span class="screen__brand">onyx &middot;</span>
+            </div>
+
+            <div class="screen__greet-row">
+              <canvas class="onyx-sprite screen__onyx" width="32" height="32" aria-hidden="true"></canvas>
+              <div class="screen__greeting">good morning,<br>jaime.</div>
+            </div>
+
+            <div class="screen__score">
+              <div class="screen__score-label">SCORE</div>
+              <div class="screen__score-num">714</div>
+              <div class="screen__score-delta">&uarr; up 12 from monday</div>
+            </div>
+
+            <div class="screen__block">
+              <div class="screen__block-label">&mdash; yesterday</div>
+              <div class="screen__stat"><span>sleep</span><span>6h 40m</span><span class="good">&uarr;</span></div>
+              <div class="screen__stat"><span>spending</span><span>$47.20</span><span class="neutral">&bull;</span></div>
+              <div class="screen__stat"><span>writing</span><span>day 23</span><span class="good">&#10003;</span></div>
+              <div class="screen__stat"><span>workouts</span><span>1 / 2</span><span class="neutral">&#x25CB;</span></div>
+            </div>
+
+            <div class="screen__block">
+              <div class="screen__block-label">&mdash; onyx says</div>
+              <div class="screen__msg">your card hit 3 times yesterday &mdash; all under $15. clean day.</div>
+            </div>
           </div>
 
-          <div class="screen__greet-row">
-            <canvas class="onyx-sprite screen__onyx" width="32" height="32" aria-hidden="true"></canvas>
-            <div class="screen__greeting">good morning,<br>jaime.</div>
+          <!-- LIVE (mid-day) -->
+          <div class="screen-day" data-time="live">
+            <div class="screen__status">
+              <span>2:18 PM</span>
+              <span class="screen__brand screen__brand--live"><span class="screen__live-dot"></span> live &middot;</span>
+            </div>
+
+            <div class="screen__greet-row">
+              <canvas class="onyx-sprite screen__onyx" width="32" height="32" aria-hidden="true"></canvas>
+              <div class="screen__greeting">heads up,<br>jaime.</div>
+            </div>
+
+            <div class="screen__alert">
+              <div class="screen__alert-row">
+                <span class="screen__alert-amt">&minus;$28.00</span>
+                <span class="screen__alert-when">3 min ago</span>
+              </div>
+              <div class="screen__alert-where">DOORDASH &middot; food</div>
+            </div>
+
+            <div class="screen__block">
+              <div class="screen__block-label">&mdash; today so far</div>
+              <div class="screen__stat"><span>spent</span><span>$73</span><span class="warn">&uarr;</span></div>
+              <div class="screen__stat"><span>food budget</span><span>$25 over</span><span class="warn">!</span></div>
+              <div class="screen__stat"><span>checking</span><span>$482</span><span class="neutral">&bull;</span></div>
+            </div>
+
+            <div class="screen__block">
+              <div class="screen__block-label">&mdash; onyx says</div>
+              <div class="screen__msg">third doordash this week. i can move $50 to savings + lock food till sunday, or we ride. your call.</div>
+            </div>
           </div>
 
-          <div class="screen__score">
-            <div class="screen__score-label">SCORE</div>
-            <div class="screen__score-num">714</div>
-            <div class="screen__score-delta">&uarr; up 12 from monday</div>
-          </div>
+          <!-- NIGHT (end of day) -->
+          <div class="screen-day" data-time="night">
+            <div class="screen__status">
+              <span>10:47 PM</span>
+              <span class="screen__brand">onyx &middot;</span>
+            </div>
 
-          <div class="screen__block">
-            <div class="screen__block-label">&mdash; yesterday</div>
-            <div class="screen__stat"><span>sleep</span><span>6h 40m</span><span class="good">&uarr;</span></div>
-            <div class="screen__stat"><span>spending</span><span>$47.20</span><span class="neutral">&bull;</span></div>
-            <div class="screen__stat"><span>writing</span><span>day 23</span><span class="good">&#10003;</span></div>
-            <div class="screen__stat"><span>workouts</span><span>1 / 2</span><span class="neutral">&#x25CB;</span></div>
-          </div>
+            <div class="screen__greet-row">
+              <canvas class="onyx-sprite screen__onyx" width="32" height="32" aria-hidden="true"></canvas>
+              <div class="screen__greeting">wrapping<br>today.</div>
+            </div>
 
-          <div class="screen__block">
-            <div class="screen__block-label">&mdash; onyx says</div>
-            <div class="screen__msg">your card hit 3 times yesterday &mdash; all under $15. clean day.</div>
+            <div class="screen__score">
+              <div class="screen__score-label">SCORE &middot; TODAY</div>
+              <div class="screen__score-num">728</div>
+              <div class="screen__score-delta">&uarr; up 14 from yesterday</div>
+            </div>
+
+            <div class="screen__block">
+              <div class="screen__block-label">&mdash; today</div>
+              <div class="screen__stat"><span>workouts</span><span>2 / 2</span><span class="good">&#10003;</span></div>
+              <div class="screen__stat"><span>writing</span><span>day 24</span><span class="good">&#10003;</span></div>
+              <div class="screen__stat"><span>spending</span><span>$52</span><span class="good">&#10003;</span></div>
+              <div class="screen__stat"><span>sleep goal</span><span>7h 30m</span><span class="neutral">&bull;</span></div>
+            </div>
+
+            <div class="screen__block">
+              <div class="screen__block-label">&mdash; onyx says</div>
+              <div class="screen__msg">two workouts logged. streak day 24. spending $8 under. no one saw it but me. proud of you.</div>
+            </div>
           </div>
 
           <div class="screen__tabs">

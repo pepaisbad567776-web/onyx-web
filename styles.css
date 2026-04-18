@@ -1442,8 +1442,8 @@ button:focus-visible {
   .buildlog__header { gap: 12px; margin-bottom: 36px; }
   .buildlog__onyx { width: 40px; height: 40px; }
   .chat-head__avatar { width: 28px; height: 28px; }
-  .chat-bubble { max-width: 86%; }
-  .chat-bubble__body { font-size: 12px; padding: 8px 12px 6px; }
+  .day-bubble { max-width: 86%; }
+  .day-bubble__body { font-size: 12px; padding: 8px 12px 6px; }
   /* On mobile, let chat expand inline — avoids the "scroll-trap" where
      touch-scrolling inside the chat keeps the page stuck. The phone
      frame just grows to show the whole day at once. */
@@ -1667,15 +1667,16 @@ button:focus-visible {
   margin-top: 6px;
 }
 
-/* Chat bubbles */
-.chat-bubble {
+/* Day chat bubbles (product section — distinct from .chat-bubble used by
+   the animated phone-chat engine in the meet section) */
+.day-bubble {
   display: flex;
   max-width: 82%;
 }
-.chat-bubble--onyx { align-self: flex-start; }
-.chat-bubble--user { align-self: flex-end; }
+.day-bubble--onyx { align-self: flex-start; }
+.day-bubble--user { align-self: flex-end; }
 
-.chat-bubble__body {
+.day-bubble__body {
   background: #1b1b1b;
   border-radius: 16px 16px 16px 6px;
   padding: 9px 13px 7px;
@@ -1685,13 +1686,13 @@ button:focus-visible {
   color: var(--text);
   letter-spacing: -0.005em;
 }
-.chat-bubble--user .chat-bubble__body {
+.day-bubble--user .day-bubble__body {
   background: linear-gradient(180deg, #c9a84c 0%, #a68b3e 100%);
   color: #0a0a0a;
   border-radius: 16px 16px 6px 16px;
   font-weight: 500;
 }
-.chat-bubble__time {
+.day-bubble__time {
   display: block;
   font-family: var(--mono);
   font-size: 9px;
@@ -1700,7 +1701,7 @@ button:focus-visible {
   margin-top: 3px;
   text-transform: uppercase;
 }
-.chat-bubble--user .chat-bubble__time { color: rgba(10,10,10,0.55); }
+.day-bubble--user .day-bubble__time { color: rgba(10,10,10,0.55); }
 
 /* Input bar */
 .chat-input {

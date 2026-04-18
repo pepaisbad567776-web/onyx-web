@@ -230,8 +230,8 @@
       Morning. Live. <em>Night.</em>
     </h2>
     <p class="section-body product__intro">
-      He lives in your phone. Three buzzes a day &mdash; morning, mid, night.
-      Below is one Tuesday. Some of these messages will sound like your life.
+      Here's the app. Not a dashboard, not an inbox &mdash; a feed that knows your day.
+      Below is one Tuesday with Onyx. Some of this will sound like your life.
       That's the point.
     </p>
 
@@ -288,8 +288,19 @@
             <div class="day-bubble day-bubble--onyx">
               <div class="day-bubble__body">5h 20m. you fell asleep with chrome open.<span class="day-bubble__time">6:43 AM</span></div>
             </div>
+
+            <!-- Context card: today's shape -->
+            <div class="day-card">
+              <div class="day-card__label">today's shape</div>
+              <ul class="day-card__stats">
+                <li><span>shift</span><span>3:00 PM</span></li>
+                <li><span>bank</span><span>$482</span></li>
+                <li><span>rent due</span><span>tuesday</span></li>
+              </ul>
+            </div>
+
             <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">shift at 3. you have time before. fix one sentence. not the whole page. just the one you kept rewriting.<span class="day-bubble__time">6:43 AM</span></div>
+              <div class="day-bubble__body">shift at 3 &mdash; you have time before. fix one sentence. not the whole page. just the one you kept rewriting.<span class="day-bubble__time">6:43 AM</span></div>
             </div>
             <div class="day-bubble day-bubble--user">
               <div class="day-bubble__body">ok<span class="day-bubble__time">6:44 AM</span></div>
@@ -298,16 +309,25 @@
             <div class="chat-time" id="chat-live">&mdash; 2:18 PM</div>
 
             <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">you've opened the bank app three times in an hour. the number's the same.<span class="day-bubble__time">2:18 PM</span></div>
+              <div class="day-bubble__body">you've opened the bank app three times in an hour. the number's the same. that's fear, not strategy. close the tab.<span class="day-bubble__time">2:18 PM</span></div>
             </div>
-            <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">that's fear, not strategy. close the tab. eat something.<span class="day-bubble__time">2:18 PM</span></div>
+
+            <!-- Alert card: spending flag -->
+            <div class="day-card day-card--alert">
+              <div class="day-card__flag"><span class="day-card__flag-dot"></span>spending &middot; just now</div>
+              <div class="day-card__primary">&minus;$28.00</div>
+              <div class="day-card__meta">DOORDASH &middot; food &middot; 3rd this week</div>
+              <div class="day-card__actions">
+                <button class="day-card__btn day-card__btn--primary">move $50 &rarr; savings</button>
+                <button class="day-card__btn">not now</button>
+              </div>
             </div>
+
             <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">also &mdash; $28 at doordash just hit. third this week. move $50 to savings + lock food till sunday?<span class="day-bubble__time">2:19 PM</span></div>
+              <div class="day-bubble__body">want me to lock food till sunday too?<span class="day-bubble__time">2:19 PM</span></div>
             </div>
             <div class="day-bubble day-bubble--user">
-              <div class="day-bubble__body">lock it<span class="day-bubble__time">2:20 PM</span></div>
+              <div class="day-bubble__body">yeah<span class="day-bubble__time">2:20 PM</span></div>
             </div>
             <div class="day-bubble day-bubble--onyx">
               <div class="day-bubble__body">done. breathe.<span class="day-bubble__time">2:20 PM</span></div>
@@ -316,16 +336,23 @@
             <div class="chat-time" id="chat-night">&mdash; 10:47 PM</div>
 
             <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">you shipped the new hero tonight.<span class="day-bubble__time">10:47 PM</span></div>
+              <div class="day-bubble__body">you shipped the new hero tonight. you called your mom. three minutes. she told you she's proud. you needed that.<span class="day-bubble__time">10:47 PM</span></div>
             </div>
-            <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">three people visited. one signed up. doesn't feel like momentum. it is.<span class="day-bubble__time">10:47 PM</span></div>
+
+            <!-- Recap card: today -->
+            <div class="day-card day-card--recap">
+              <div class="day-card__label">today &middot; april 18</div>
+              <ul class="day-card__stats">
+                <li><span>sleep</span><span>5h 20m</span></li>
+                <li><span>spent</span><span>$47</span></li>
+                <li><span>shipped</span><span>1 hero fix</span></li>
+                <li><span>signups</span><span>1 new</span></li>
+                <li><span>mom called</span><span>&#10003;</span></li>
+              </ul>
             </div>
+
             <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">you called your mom. three minutes. she told you she's proud. you needed that.<span class="day-bubble__time">10:48 PM</span></div>
-            </div>
-            <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">sleep. day 19 turns into day 20 fast.<span class="day-bubble__time">10:49 PM</span></div>
+              <div class="day-bubble__body">doesn't feel like momentum. it is. sleep &mdash; day 19 turns into day 20 fast.<span class="day-bubble__time">10:49 PM</span></div>
             </div>
 
           </div>
@@ -334,6 +361,14 @@
           <div class="chat-input">
             <span class="chat-input__text">message onyx&hellip;</span>
             <span class="chat-input__send" aria-hidden="true">&uarr;</span>
+          </div>
+
+          <!-- App tab bar -->
+          <div class="app-tabs">
+            <span class="app-tabs__item active">home</span>
+            <span class="app-tabs__item">money</span>
+            <span class="app-tabs__item">habits</span>
+            <span class="app-tabs__item">me</span>
           </div>
         </div>
       </div>

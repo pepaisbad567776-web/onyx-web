@@ -246,6 +246,8 @@
       if (btn) { btn.disabled = true; btn.textContent = 'Saving\u2026'; }
 
       var payload = {
+        _subject: '[Onyx waitlist #' + counter + '] ' + email,
+        _replyto: email,
         email: email,
         source: formId,
         ref: referredBy,
@@ -326,7 +328,7 @@
       if (!msg) return;
       var btn = talkModForm.querySelector('button');
       if (btn) { btn.disabled = true; btn.textContent = 'Sending\u2026'; }
-      var p = { source: 'feedback', message: msg, email: email || 'anonymous', ref: referredBy, timestamp: new Date().toISOString() };
+      var p = buildFeedbackPayload(msg, email, 'modal');
       if (WAITLIST_ENDPOINT) {
         try { await fetch(WAITLIST_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(p) }); } catch (_) {}
       }
@@ -334,6 +336,28 @@
       var note = document.getElementById('talk-modal-note');
       if (note) note.textContent = '\u2713  message sent. jaime will see it.';
     });
+  }
+
+  // Shared feedback payload builder — Formspree-friendly shape so the
+  // email that lands in Jaime's inbox has the MESSAGE right in the subject
+  // line (not a generic "New submission from Onyx Waitlist" header) and
+  // the full message body shows first in the notification.
+  function buildFeedbackPayload(msg, email, source) {
+    var preview = msg.replace(/\s+/g, ' ').trim().slice(0, 70);
+    if (msg.length > 70) preview += '\u2026';
+    var payload = {
+      _subject: '[Onyx feedback] ' + preview,
+      // Placing "message" first so Formspree's default field ordering
+      // shows it at the top of the notification email.
+      message: msg,
+      email: email || '',
+      sender: email || '(anonymous)',
+      source: 'feedback-' + (source || 'inline'),
+      ref: referredBy || '',
+      timestamp: new Date().toISOString(),
+    };
+    if (email) payload._replyto = email;
+    return payload;
   }
 
   // Talk to Jaime — inline feedback form
@@ -350,13 +374,7 @@
       var btn = talkForm.querySelector('button');
       if (btn) { btn.disabled = true; btn.textContent = 'Sending\u2026'; }
 
-      var fbPayload = {
-        source: 'feedback',
-        message: msg,
-        email: email || 'anonymous',
-        ref: referredBy,
-        timestamp: new Date().toISOString(),
-      };
+      var fbPayload = buildFeedbackPayload(msg, email, 'inline');
 
       if (WAITLIST_ENDPOINT) {
         try {

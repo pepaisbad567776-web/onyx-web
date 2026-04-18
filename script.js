@@ -103,6 +103,28 @@
   var urlParams = new URLSearchParams(window.location.search);
   var referredBy = urlParams.get('ref') || null;
 
+  // ---- Day-of-30 countdown (hero trust row) ----
+  (function () {
+    // Build started April 1, 2026 (day 01). Today = (now - start) + 1, capped 1..30.
+    var BUILD_START = new Date('2026-04-01T00:00:00');
+    var now = new Date();
+    var daysElapsed = Math.floor((now - BUILD_START) / 86400000) + 1;
+    var day = Math.min(30, Math.max(1, daysElapsed));
+    var dayEl = document.getElementById('day-num');
+    var labelEl = document.getElementById('day-label');
+    var barEl = document.getElementById('day-bar');
+    if (dayEl) dayEl.textContent = day;
+    if (labelEl) {
+      if (day >= 30) labelEl.textContent = 'launch week';
+      else if (day >= 25) labelEl.textContent = 'final stretch';
+      else labelEl.textContent = 'days in';
+    }
+    if (barEl) {
+      // Paint after a tick so the transition animates.
+      setTimeout(function () { barEl.style.width = Math.round((day / 30) * 100) + '%'; }, 400);
+    }
+  })();
+
   // ---- Live counter ----
   var COUNTER_KEY = 'onyx-counter';
   var COUNTER_START = 347;

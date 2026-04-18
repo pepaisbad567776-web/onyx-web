@@ -475,91 +475,40 @@
   }
 
   // ----------------------------------------------------------------
-  // 3.5 Product chat thread — Morning / Live / Night tabs scroll to
-  //     the matching moment in the conversation. On first view, the
-  //     whole day auto-scrolls so visitors see it unfold.
+  // 3.5 Product mockup — Morning / Live / Night tabs swap the phone
+  //     screen to that moment. Auto-cycles once on first view.
   // ----------------------------------------------------------------
   (function () {
     var times = Array.prototype.slice.call(document.querySelectorAll('.product-time'));
-    var chat = document.getElementById('chat-scroll');
+    var feeds = Array.prototype.slice.call(document.querySelectorAll('.day-feed'));
     var productSection = document.getElementById('product');
-    if (!times.length || !chat) return;
+    if (!times.length || !feeds.length) return;
 
     var userInteracted = false;
+    var cycleTimer = null;
 
-    function setActiveTab(tab) {
+    function setActiveDay(day) {
       times.forEach(function (t) {
-        var match = t === tab;
+        var match = t.dataset.day === day;
         t.classList.toggle('is-active', match);
         t.setAttribute('aria-selected', match ? 'true' : 'false');
       });
-    }
-
-    // Smooth-scroll the chat container to a target absolute Y over duration ms.
-    function animateChatTo(targetY, duration) {
-      var startY = chat.scrollTop;
-      var dy = targetY - startY;
-      if (Math.abs(dy) < 2) return;
-      var start = performance.now();
-      function tick(now) {
-        if (userInteracted && duration > 800) return; // let user take over long auto-scrolls
-        var t = Math.min(1, (now - start) / duration);
-        // easeInOutCubic
-        var k = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        chat.scrollTop = startY + dy * k;
-        if (t < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    }
-
-    function scrollToAnchor(anchorId, duration) {
-      var el = document.getElementById(anchorId);
-      if (!el) return;
-      // Mobile layout: chat is overflow:visible, so scroll the page itself
-      // to the anchor instead of scrolling inside the chat.
-      if (window.innerWidth <= 960) {
-        var rect = el.getBoundingClientRect();
-        window.scrollTo({ top: window.scrollY + rect.top - 120, behavior: 'smooth' });
-        return;
-      }
-      var offset = el.offsetTop - 16;
-      animateChatTo(offset, duration == null ? 600 : duration);
+      feeds.forEach(function (f) {
+        f.classList.toggle('is-active', f.dataset.day === day);
+      });
     }
 
     times.forEach(function (t) {
       t.addEventListener('click', function () {
         userInteracted = true;
-        setActiveTab(t);
-        scrollToAnchor(t.dataset.anchor, 600);
+        if (cycleTimer) { clearInterval(cycleTimer); cycleTimer = null; }
+        setActiveDay(t.dataset.day);
       });
     });
 
-    // Track manual scroll to stop any running auto-animation AND update the
-    // active tab based on which anchor is currently most-visible.
-    var scrollRaf = 0;
-    chat.addEventListener('scroll', function () {
-      if (scrollRaf) return;
-      scrollRaf = requestAnimationFrame(function () {
-        scrollRaf = 0;
-        var anchors = ['chat-morning', 'chat-live', 'chat-night'];
-        var current = null;
-        for (var i = 0; i < anchors.length; i++) {
-          var el = document.getElementById(anchors[i]);
-          if (!el) continue;
-          if (el.offsetTop - 60 <= chat.scrollTop) current = anchors[i];
-        }
-        if (current) {
-          var tab = times.filter(function (t) { return t.dataset.anchor === current; })[0];
-          if (tab && !tab.classList.contains('is-active')) setActiveTab(tab);
-        }
-      });
-    }, { passive: true });
-
-    chat.addEventListener('wheel', function () { userInteracted = true; }, { passive: true });
-    chat.addEventListener('touchstart', function () { userInteracted = true; }, { passive: true });
-
-    // Auto-tour on first section-in-view: scroll from top to bottom slowly.
-    // Skip entirely if the user prefers reduced motion.
+    // Auto-tour: on first section-in-view, cycle through morning → live →
+    // night so visitors see all three without clicking. Stops on the last
+    // one; any user click halts the cycle immediately.
     var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!prefersReduced && 'IntersectionObserver' in window && productSection) {
       var started = false;
@@ -567,11 +516,18 @@
         if (started) return;
         if (!entries[0].isIntersecting) return;
         started = true;
-        setTimeout(function () {
-          if (userInteracted) return;
-          var full = chat.scrollHeight - chat.clientHeight;
-          animateChatTo(full, 10000);
-        }, 700);
+        var order = ['morning', 'live', 'night'];
+        var i = 0;
+        cycleTimer = setInterval(function () {
+          if (userInteracted) { clearInterval(cycleTimer); cycleTimer = null; return; }
+          i++;
+          if (i >= order.length) {
+            clearInterval(cycleTimer);
+            cycleTimer = null;
+            return;
+          }
+          setActiveDay(order[i]);
+        }, 4200);
       }, { threshold: 0.4 }).observe(productSection);
     }
   })();

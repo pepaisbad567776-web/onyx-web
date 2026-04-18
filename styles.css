@@ -1444,15 +1444,15 @@ button:focus-visible {
   .chat-head__avatar { width: 28px; height: 28px; }
   .day-bubble { max-width: 86%; }
   .day-bubble__body { font-size: 12px; padding: 8px 12px 6px; }
-  /* On mobile, let chat expand inline — avoids the "scroll-trap" where
-     touch-scrolling inside the chat keeps the page stuck. The phone
-     frame just grows to show the whole day at once. */
-  .chat-scroll {
-    padding: 12px 10px 10px;
-    overflow: visible;
-    max-height: none;
-  }
+  /* On mobile, let the active day-feed expand inline so the whole
+     moment shows without internal scroll (avoids touch-scroll traps). */
+  .day-feed { overflow: visible; padding: 12px 10px 10px; }
   .product-phone__screen--chat { min-height: 0; }
+  .day-card { padding: 12px 14px; }
+  .day-card__primary { font-size: 26px; }
+  .day-card__btn { font-size: 10.5px; padding: 8px 8px; }
+  .app-tabs { padding: 8px 6px 12px; }
+  .app-tabs__item { font-size: 9px; letter-spacing: 0.1em; }
   .notifs { padding: 80px 0; }
   .notifs__intro { margin-bottom: 40px; }
   .notifs__stage { padding: 32px 0 24px; margin: 0 20px; }
@@ -1635,25 +1635,22 @@ button:focus-visible {
   animation: livePulse 1.4s ease-in-out infinite;
 }
 
-/* Scrollable chat thread */
-.chat-scroll {
+/* Day feeds — each tab reveals one focused snapshot */
+.day-feed {
+  display: none;
   flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 16px 14px 12px;
-  display: flex;
   flex-direction: column;
   gap: 6px;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.08) transparent;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
+  padding: 14px 14px 10px;
+  overflow-y: auto;
 }
-.chat-scroll::-webkit-scrollbar { width: 3px; }
-.chat-scroll::-webkit-scrollbar-track { background: transparent; }
-.chat-scroll::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.08);
-  border-radius: 2px;
+.day-feed.is-active {
+  display: flex;
+  animation: dayFeedIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes dayFeedIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* Time/day separators */

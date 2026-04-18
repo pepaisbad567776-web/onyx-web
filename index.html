@@ -235,17 +235,17 @@
       That's the point.
     </p>
 
-    <!-- Time-of-day tabs (scroll to moment in the chat) -->
+    <!-- Time-of-day tabs (swap the phone screen to that moment) -->
     <div class="product-times" role="tablist" aria-label="Time of day">
-      <button class="product-time is-active" data-anchor="chat-morning" role="tab" aria-selected="true">
+      <button class="product-time is-active" data-day="morning" role="tab" aria-selected="true">
         <span class="product-time__when">6:42 AM</span>
         <span class="product-time__label">Morning</span>
       </button>
-      <button class="product-time" data-anchor="chat-live" role="tab" aria-selected="false">
+      <button class="product-time" data-day="live" role="tab" aria-selected="false">
         <span class="product-time__when">2:18 PM</span>
         <span class="product-time__label">Live</span>
       </button>
-      <button class="product-time" data-anchor="chat-night" role="tab" aria-selected="false">
+      <button class="product-time" data-day="night" role="tab" aria-selected="false">
         <span class="product-time__when">10:47 PM</span>
         <span class="product-time__label">Night</span>
       </button>
@@ -265,31 +265,22 @@
             </div>
           </div>
 
-          <!-- Scrollable chat thread -->
-          <div class="chat-scroll" id="chat-scroll">
+          <!-- Day feeds — only the active one visible, tab-swapped -->
 
-            <div class="chat-time">&mdash; yesterday</div>
-
-            <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">you showed the page to your friend today. he didn't get it.<span class="day-bubble__time">10:47 PM</span></div>
-            </div>
-            <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">that hurt. you rewrote the hero sentence 14 times after.<span class="day-bubble__time">10:47 PM</span></div>
-            </div>
-            <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">one reaction is information, not a verdict. sleep. we fix one sentence tomorrow. not the page.<span class="day-bubble__time">10:48 PM</span></div>
-            </div>
-
-            <div class="chat-time" id="chat-morning">&mdash; today &middot; 6:42 AM</div>
+          <!-- MORNING FEED -->
+          <div class="day-feed is-active" data-day="morning">
+            <div class="chat-time">&mdash; today &middot; 6:42 AM</div>
 
             <div class="day-bubble day-bubble--onyx">
               <div class="day-bubble__body">good morning.<span class="day-bubble__time">6:42 AM</span></div>
             </div>
             <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">5h 20m. you fell asleep with chrome open.<span class="day-bubble__time">6:43 AM</span></div>
+              <div class="day-bubble__body">day 19 of the build. two weeks ago this was a notion doc.<span class="day-bubble__time">6:42 AM</span></div>
+            </div>
+            <div class="day-bubble day-bubble--onyx">
+              <div class="day-bubble__body">5h 20m last night. rough — but your monthly avg is up from 4h to 5.5h. sleep debt is bending.<span class="day-bubble__time">6:43 AM</span></div>
             </div>
 
-            <!-- Context card: today's shape -->
             <div class="day-card">
               <div class="day-card__label">today's shape</div>
               <ul class="day-card__stats">
@@ -300,19 +291,24 @@
             </div>
 
             <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">shift at 3 &mdash; you have time before. fix one sentence. not the whole page. just the one you kept rewriting.<span class="day-bubble__time">6:43 AM</span></div>
+              <div class="day-bubble__body">5 hours before shift. one fix today &mdash; the hero sentence you rewrote 14 times last night. today it lands.<span class="day-bubble__time">6:43 AM</span></div>
             </div>
             <div class="day-bubble day-bubble--user">
               <div class="day-bubble__body">ok<span class="day-bubble__time">6:44 AM</span></div>
             </div>
+          </div>
 
-            <div class="chat-time" id="chat-live">&mdash; 2:18 PM</div>
+          <!-- LIVE FEED (mid-day) -->
+          <div class="day-feed" data-day="live">
+            <div class="chat-time">&mdash; today &middot; 2:18 PM</div>
 
             <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">you've opened the bank app three times in an hour. the number's the same. that's fear, not strategy. close the tab.<span class="day-bubble__time">2:18 PM</span></div>
+              <div class="day-bubble__body">you've opened the bank app 3 times in an hour. number's the same.<span class="day-bubble__time">2:18 PM</span></div>
+            </div>
+            <div class="day-bubble day-bubble--onyx">
+              <div class="day-bubble__body">a month ago you were doing this 8 times a day. that pattern's breaking. i see it even if you don't.<span class="day-bubble__time">2:18 PM</span></div>
             </div>
 
-            <!-- Alert card: spending flag -->
             <div class="day-card day-card--alert">
               <div class="day-card__flag"><span class="day-card__flag-dot"></span>spending &middot; just now</div>
               <div class="day-card__primary">&minus;$28.00</div>
@@ -324,22 +320,27 @@
             </div>
 
             <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">want me to lock food till sunday too?<span class="day-bubble__time">2:19 PM</span></div>
+              <div class="day-bubble__body">third doordash this week. savings move keeps the progress going.<span class="day-bubble__time">2:19 PM</span></div>
             </div>
             <div class="day-bubble day-bubble--user">
-              <div class="day-bubble__body">yeah<span class="day-bubble__time">2:20 PM</span></div>
+              <div class="day-bubble__body">lock it<span class="day-bubble__time">2:20 PM</span></div>
             </div>
             <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">done. breathe.<span class="day-bubble__time">2:20 PM</span></div>
+              <div class="day-bubble__body">done. you're building financial muscle whether it feels like it or not.<span class="day-bubble__time">2:20 PM</span></div>
             </div>
+          </div>
 
-            <div class="chat-time" id="chat-night">&mdash; 10:47 PM</div>
+          <!-- NIGHT FEED -->
+          <div class="day-feed" data-day="night">
+            <div class="chat-time">&mdash; today &middot; 10:47 PM</div>
 
             <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">you shipped the new hero tonight. you called your mom. three minutes. she told you she's proud. you needed that.<span class="day-bubble__time">10:47 PM</span></div>
+              <div class="day-bubble__body">one signup today.<span class="day-bubble__time">10:47 PM</span></div>
+            </div>
+            <div class="day-bubble day-bubble--onyx">
+              <div class="day-bubble__body">week 1 had 0. week 2 had 4. this week: 11. that's compounding. most people miss it because they only look at today.<span class="day-bubble__time">10:47 PM</span></div>
             </div>
 
-            <!-- Recap card: today -->
             <div class="day-card day-card--recap">
               <div class="day-card__label">today &middot; april 18</div>
               <ul class="day-card__stats">
@@ -352,9 +353,11 @@
             </div>
 
             <div class="day-bubble day-bubble--onyx">
-              <div class="day-bubble__body">doesn't feel like momentum. it is. sleep &mdash; day 19 turns into day 20 fast.<span class="day-bubble__time">10:49 PM</span></div>
+              <div class="day-bubble__body">you called your mom. three weeks of not calling. today you did. i saw.<span class="day-bubble__time">10:48 PM</span></div>
             </div>
-
+            <div class="day-bubble day-bubble--onyx">
+              <div class="day-bubble__body">day 19 down. 11 left. sleep.<span class="day-bubble__time">10:49 PM</span></div>
+            </div>
           </div>
 
           <!-- Input bar (static mock) -->
@@ -389,29 +392,28 @@
       <article class="card">
         <div class="card__tag">morning</div>
         <p class="card__quote">
-          "good morning. 5h 20m. shift at 3 — you have time before.
-          fix one sentence. not the whole page. just the one."
+          "good morning. 5h 20m — monthly avg is up from 4h to 5.5h.
+          sleep debt is bending. one fix today: the hero sentence."
         </p>
-        <div class="card__sub">Not a report. A check-in.</div>
+        <div class="card__sub">A coach who holds the long view.</div>
       </article>
 
       <article class="card">
         <div class="card__tag">live</div>
         <p class="card__quote">
-          "you've opened the bank app three times in an hour. the number's
-          the same. that's fear, not strategy. close the tab. eat something."
+          "3 bank app opens in an hour. month ago you did this 8 times
+          a day. pattern's breaking. i see it even if you don't."
         </p>
-        <div class="card__sub">Catches what you'd miss. No lecture.</div>
+        <div class="card__sub">Catches what you'd miss.</div>
       </article>
 
       <article class="card">
         <div class="card__tag">night</div>
         <p class="card__quote">
-          "you showed the page to your friend today. he didn't get it. one
-          reaction is information, not a verdict. we fix one sentence
-          tomorrow. not the page."
+          "one signup today. week 1 had 0. week 2 had 4. this week:
+          11. that's compounding. most people miss it."
         </p>
-        <div class="card__sub">Witnesses the work nobody else sees.</div>
+        <div class="card__sub">Shows the progress you can't see yourself.</div>
       </article>
     </div>
   </div>
@@ -499,7 +501,7 @@
             <span class="notif__name">ONYX</span>
             <span class="notif__when">now</span>
           </div>
-          <div class="notif__body">good morning. 5h 20m. shift at 3 &mdash; you have time before. fix one sentence. not the whole page.</div>
+          <div class="notif__body">good morning. 5h 20m &mdash; monthly avg up from 4h to 5.5h. sleep debt's bending. today: one fix, the hero sentence.</div>
         </div>
         <div class="notif">
           <div class="notif__head">
@@ -507,7 +509,7 @@
             <span class="notif__name">ONYX</span>
             <span class="notif__when">yesterday 2:18 PM</span>
           </div>
-          <div class="notif__body">you've opened the bank app three times in an hour. the number's the same. that's fear, not strategy. close the tab.</div>
+          <div class="notif__body">3 bank app opens in an hour. month ago you did this 8 times a day. pattern's breaking &mdash; i see it even if you don't.</div>
         </div>
         <div class="notif">
           <div class="notif__head">
@@ -515,7 +517,7 @@
             <span class="notif__name">ONYX</span>
             <span class="notif__when">yesterday 10:47 PM</span>
           </div>
-          <div class="notif__body">you showed the page to your friend today. he didn't get it. one reaction is information, not a verdict. sleep.</div>
+          <div class="notif__body">one signup today. week 1: 0. week 2: 4. this week: 11. that's compounding. most people miss it.</div>
         </div>
       </div>
 

@@ -1653,6 +1653,63 @@ button:focus-visible {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Momentum score card — the hero metric at the top of every day-feed.
+   This is the answer to "what does Onyx actually provide" — a single
+   composite number that moves with your choices. */
+.momentum-card {
+  align-self: stretch;
+  background: linear-gradient(180deg, rgba(201,168,76,0.11) 0%, rgba(201,168,76,0.02) 100%);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 14px;
+  padding: 16px 18px 14px;
+  text-align: center;
+  margin-bottom: 4px;
+}
+.momentum-card--night {
+  background: linear-gradient(180deg, rgba(201,168,76,0.14) 0%, rgba(201,168,76,0.03) 100%);
+  border-color: rgba(201,168,76,0.32);
+}
+.momentum-card__label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  margin-bottom: 6px;
+}
+.momentum-card__num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 56px;
+  color: var(--gold);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.momentum-card__delta {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  margin-top: 6px;
+}
+.momentum-card__delta--down { color: #d07a3a; }
+.momentum-card__spark {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 3px;
+  height: 20px;
+  margin-top: 10px;
+}
+.momentum-card__spark span {
+  width: 5px;
+  background: linear-gradient(180deg, var(--gold) 0%, rgba(201,168,76,0.3) 100%);
+  border-radius: 1px;
+  opacity: 0.7;
+}
+.momentum-card__spark span:last-child { opacity: 1; }
+
 /* Time/day separators */
 .chat-time {
   font-family: var(--mono);

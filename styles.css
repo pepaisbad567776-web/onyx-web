@@ -1384,7 +1384,15 @@ button:focus-visible {
   .chat-head__avatar { width: 28px; height: 28px; }
   .chat-bubble { max-width: 86%; }
   .chat-bubble__body { font-size: 12px; padding: 8px 12px 6px; }
-  .chat-scroll { padding: 12px 10px 10px; }
+  /* On mobile, let chat expand inline — avoids the "scroll-trap" where
+     touch-scrolling inside the chat keeps the page stuck. The phone
+     frame just grows to show the whole day at once. */
+  .chat-scroll {
+    padding: 12px 10px 10px;
+    overflow: visible;
+    max-height: none;
+  }
+  .product-phone__screen--chat { min-height: 0; }
   .notifs { padding: 80px 0; }
   .notifs__intro { margin-bottom: 40px; }
   .notifs__stage { padding: 32px 0 24px; margin: 0 20px; }
@@ -1718,6 +1726,135 @@ button:focus-visible {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%      { opacity: 0.35; transform: scale(0.75); }
 }
+
+/* =========================================================
+   Legal pages (privacy, terms)
+   ========================================================= */
+
+.legal {
+  padding: 140px 0 100px;
+  background: var(--bg);
+  min-height: calc(100vh - 200px);
+}
+.legal__inner {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.legal__title {
+  font-family: var(--serif);
+  font-size: clamp(44px, 6vw, 72px);
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  margin: 20px 0 32px;
+}
+.legal__lede {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1.5;
+  color: var(--text);
+  font-style: italic;
+  margin-bottom: 48px;
+  padding-left: 20px;
+  border-left: 2px solid var(--gold-dim);
+}
+.legal__lede a { color: var(--gold); }
+.legal h2 {
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 44px 0 14px;
+  letter-spacing: -0.01em;
+}
+.legal p, .legal li {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-2);
+  margin-bottom: 14px;
+}
+.legal ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 14px;
+}
+.legal li {
+  padding-left: 18px;
+  position: relative;
+}
+.legal li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+}
+.legal a {
+  color: var(--text);
+  border-bottom: 1px solid var(--gold-dim);
+  text-decoration: none;
+  transition: color 0.15s, border-color 0.15s;
+}
+.legal a:hover { color: var(--gold); border-color: var(--gold); }
+.legal strong { color: var(--text); font-weight: 600; }
+.legal code {
+  font-family: var(--mono);
+  font-size: 14px;
+  background: var(--surface);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--gold);
+}
+.legal__date {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 56px 0 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.legal__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: none !important;
+  padding: 12px 0;
+  transition: gap 0.15s;
+}
+.legal__back:hover { gap: 12px; color: var(--gold-hover) !important; }
+
+@media (max-width: 640px) {
+  .legal { padding: 90px 0 60px; }
+  .legal__lede { font-size: 18px; padding-left: 14px; }
+  .legal p, .legal li { font-size: 15px; }
+}
+
+/* Footer links row */
+.footer__links {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-top: 8px;
+}
+.footer__links a {
+  color: var(--text-3);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.footer__links a:hover { color: var(--gold); }
+.footer__links span { margin: 0 6px; color: var(--line-strong); }
 
 /* =========================================================
    Notifications preview — ambient lock-screen proof

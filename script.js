@@ -431,6 +431,13 @@
     function scrollToAnchor(anchorId, duration) {
       var el = document.getElementById(anchorId);
       if (!el) return;
+      // Mobile layout: chat is overflow:visible, so scroll the page itself
+      // to the anchor instead of scrolling inside the chat.
+      if (window.innerWidth <= 960) {
+        var rect = el.getBoundingClientRect();
+        window.scrollTo({ top: window.scrollY + rect.top - 120, behavior: 'smooth' });
+        return;
+      }
       var offset = el.offsetTop - 16;
       animateChatTo(offset, duration == null ? 600 : duration);
     }

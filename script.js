@@ -6,6 +6,16 @@
 (function () {
   'use strict';
 
+  // ---- dev console easter egg (for the builders who look) ----
+  try {
+    var gold = 'color:#c9a84c;font-family:monospace;font-size:12px;line-height:1.5;';
+    var dim  = 'color:#7a7a7a;font-family:monospace;font-size:11px;';
+    console.log('%c// onyx\n%c> building in public. day ' +
+      Math.min(30, Math.max(1, Math.floor((new Date() - new Date('2026-04-01T00:00:00')) / 86400000) + 1)) +
+      ' of 30.\n> reading the code? email hello@getonyx.app.\n> you are seen.',
+      gold, dim);
+  } catch (_) {}
+
   // ----------------------------------------------------------------
   // 1. Console typing animation
   // ----------------------------------------------------------------

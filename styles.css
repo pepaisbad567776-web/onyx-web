@@ -1223,6 +1223,37 @@ button:focus-visible {
   align-items: center;
   gap: 18px;
 }
+.founder__cta {
+  margin-top: 36px;
+  padding-left: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.founder__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gold);
+  color: var(--bg);
+  text-decoration: none;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  transition: background 0.15s, transform 0.15s;
+}
+.founder__cta-btn:hover { background: var(--gold-hover); transform: translateY(-1px); }
+.founder__cta-note {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
 .founder__sig-text {
   display: flex;
   flex-direction: column;

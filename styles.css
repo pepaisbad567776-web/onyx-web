@@ -1344,7 +1344,10 @@ button:focus-visible {
   .buildlog__note { font-size: 17px; }
   .buildlog__header { gap: 12px; margin-bottom: 36px; }
   .buildlog__onyx { width: 40px; height: 40px; }
-  .screen__onyx { width: 34px; height: 34px; }
+  .chat-head__avatar { width: 28px; height: 28px; }
+  .chat-bubble { max-width: 86%; }
+  .chat-bubble__body { font-size: 12px; padding: 8px 12px 6px; }
+  .chat-scroll { padding: 12px 10px 10px; }
   .pricing { padding: 72px 0; }
   .pricing__row {
     grid-template-columns: 1fr;
@@ -1464,6 +1467,161 @@ button:focus-visible {
   text-align: left;
 }
 
+/* Chat variant — full-bleed, no padding/gap */
+.product-phone__screen--chat {
+  padding: 0;
+  gap: 0;
+  min-height: 580px;
+  overflow: hidden;
+}
+
+/* Chat header (inside the phone) */
+.chat-head {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 16px 18px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.015);
+}
+.chat-head__avatar {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+  flex-shrink: 0;
+}
+.chat-head__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.chat-head__name {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.chat-head__status {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-transform: lowercase;
+}
+.chat-head__dot {
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: livePulse 1.4s ease-in-out infinite;
+}
+
+/* Scrollable chat thread */
+.chat-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.08) transparent;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+.chat-scroll::-webkit-scrollbar { width: 3px; }
+.chat-scroll::-webkit-scrollbar-track { background: transparent; }
+.chat-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+}
+
+/* Time/day separators */
+.chat-time {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--text-3);
+  text-align: center;
+  padding: 14px 0 8px;
+  margin-top: 6px;
+}
+
+/* Chat bubbles */
+.chat-bubble {
+  display: flex;
+  max-width: 82%;
+}
+.chat-bubble--onyx { align-self: flex-start; }
+.chat-bubble--user { align-self: flex-end; }
+
+.chat-bubble__body {
+  background: #1b1b1b;
+  border-radius: 16px 16px 16px 6px;
+  padding: 9px 13px 7px;
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+.chat-bubble--user .chat-bubble__body {
+  background: linear-gradient(180deg, #c9a84c 0%, #a68b3e 100%);
+  color: #0a0a0a;
+  border-radius: 16px 16px 6px 16px;
+  font-weight: 500;
+}
+.chat-bubble__time {
+  display: block;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin-top: 3px;
+  text-transform: uppercase;
+}
+.chat-bubble--user .chat-bubble__time { color: rgba(10,10,10,0.55); }
+
+/* Input bar */
+.chat-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px 16px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.015);
+}
+.chat-input__text {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--text-3);
+  letter-spacing: -0.005em;
+  flex: 1;
+  padding: 8px 0;
+}
+.chat-input__send {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
 /* Time-of-day tabs (above the phone) */
 .product-times {
   display: flex;
@@ -1511,184 +1669,11 @@ button:focus-visible {
   font-weight: 500;
 }
 
-/* Day screens — only one visible */
-.screen-day {
-  display: none;
-  flex-direction: column;
-  gap: 16px;
-  animation: screenFade 0.4s ease;
-}
-.screen-day.is-active { display: flex; }
-@keyframes screenFade {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* Live state — brand pulses */
-.screen__brand--live { color: var(--gold); display: inline-flex; align-items: center; gap: 5px; }
-.screen__live-dot {
-  width: 6px;
-  height: 6px;
-  background: var(--gold);
-  border-radius: 50%;
-  animation: livePulse 1.4s ease-in-out infinite;
-}
+/* Pulsing live dot (reused by chat-head and anywhere else) */
 @keyframes livePulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%      { opacity: 0.35; transform: scale(0.75); }
 }
-
-/* Alert card (Live mid-day) */
-.screen__alert {
-  background: linear-gradient(180deg, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.02) 100%);
-  border: 1px solid rgba(201,168,76,0.24);
-  border-radius: 14px;
-  padding: 14px 18px;
-}
-.screen__alert-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 4px;
-}
-.screen__alert-amt {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 32px;
-  color: var(--gold);
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-.screen__alert-when {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-3);
-}
-.screen__alert-where {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  color: var(--gold-soft);
-  margin-top: 4px;
-}
-
-/* Warn stat variant */
-.screen__stat .warn { color: #d07a3a; }
-
-.screen__status {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.06em;
-  color: var(--text-3);
-}
-.screen__brand { color: var(--gold); letter-spacing: 0.08em; }
-
-.screen__greet-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-top: 2px;
-}
-.screen__onyx {
-  width: 40px;
-  height: 40px;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
-  -ms-interpolation-mode: nearest-neighbor;
-  flex-shrink: 0;
-  margin-top: -2px;
-}
-.screen__greeting {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 30px;
-  line-height: 1.05;
-  color: var(--text);
-  letter-spacing: -0.01em;
-  margin-top: 2px;
-}
-
-.screen__score {
-  background: linear-gradient(180deg, rgba(201,168,76,0.09) 0%, rgba(201,168,76,0.01) 100%);
-  border: 1px solid rgba(201,168,76,0.18);
-  border-radius: 14px;
-  padding: 18px 20px;
-}
-.screen__score-label {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.18em;
-  color: var(--gold-soft);
-  margin-bottom: 4px;
-}
-.screen__score-num {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 54px;
-  color: var(--gold);
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-.screen__score-delta {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.04em;
-  color: var(--gold-soft);
-  margin-top: 8px;
-}
-
-.screen__block-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  margin-bottom: 10px;
-}
-
-.screen__stat {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 7px 0;
-  font-family: var(--sans);
-  font-size: 13px;
-  border-bottom: 1px dashed rgba(255,255,255,0.04);
-}
-.screen__stat:last-child { border-bottom: none; }
-.screen__stat span:first-child { color: var(--text-3); flex: 1; }
-.screen__stat span:nth-child(2) { color: var(--text); font-variant-numeric: tabular-nums; }
-.screen__stat span:last-child { margin-left: 10px; width: 14px; text-align: center; }
-.screen__stat .good { color: var(--gold); }
-.screen__stat .neutral { color: var(--text-3); }
-
-.screen__msg {
-  background: #1a1a1a;
-  border-radius: 14px 14px 14px 4px;
-  padding: 11px 14px;
-  font-family: var(--sans);
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--text);
-}
-
-.screen__tabs {
-  display: flex;
-  justify-content: space-around;
-  padding-top: 14px;
-  margin-top: auto;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-3);
-}
-.screen__tabs .active { color: var(--gold); }
 
 /* =========================================================
    Talk to us — feedback section

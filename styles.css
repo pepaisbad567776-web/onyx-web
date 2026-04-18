@@ -1756,6 +1756,26 @@ button:focus-visible {
   50%      { opacity: 0.35; transform: scale(0.75); }
 }
 
+/* Scroll progress — thin gold line at the very top of the viewport */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 100;
+  background: transparent;
+  pointer-events: none;
+}
+.scroll-progress span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-soft) 100%);
+  transform-origin: left;
+  transition: width 0.08s linear;
+}
+
 /* =========================================================
    Legal pages (privacy, terms)
    ========================================================= */
@@ -2134,6 +2154,25 @@ button:focus-visible {
   gap: 16px;
   margin-top: 28px;
   margin-bottom: 48px;
+}
+.buildlog__header-text { display: flex; flex-direction: column; gap: 6px; }
+.buildlog__meta {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.buildlog__live-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: livePulse 1.4s ease-in-out infinite;
+  flex-shrink: 0;
 }
 .buildlog__onyx {
   width: 48px;

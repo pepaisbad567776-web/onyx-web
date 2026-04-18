@@ -103,10 +103,33 @@
   var urlParams = new URLSearchParams(window.location.search);
   var referredBy = urlParams.get('ref') || null;
 
-  // ---- Day-of-30 countdown (hero trust row) ----
+  // ---- Scroll progress indicator (top gold line) ----
+  (function () {
+    var bar = document.getElementById('scroll-progress-bar');
+    if (!bar) return;
+    var rafPending = false;
+    function tick() {
+      rafPending = false;
+      var h = document.documentElement;
+      var scrolled = h.scrollTop || document.body.scrollTop;
+      var total = h.scrollHeight - h.clientHeight;
+      var pct = total > 0 ? (scrolled / total) * 100 : 0;
+      bar.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', function () {
+      if (rafPending) return;
+      rafPending = true;
+      requestAnimationFrame(tick);
+    }, { passive: true });
+    tick();
+  })();
+
+  // ---- Day-of-30 countdown (hero trust row) + build log freshness ----
   (function () {
     // Build started April 1, 2026 (day 01). Today = (now - start) + 1, capped 1..30.
     var BUILD_START = new Date('2026-04-01T00:00:00');
+    // Most recent build log entry date — bump this when you add a new entry.
+    var LATEST_ENTRY = new Date('2026-04-18T00:00:00');
     var now = new Date();
     var daysElapsed = Math.floor((now - BUILD_START) / 86400000) + 1;
     var day = Math.min(30, Math.max(1, daysElapsed));
@@ -120,8 +143,19 @@
       else labelEl.textContent = 'days in';
     }
     if (barEl) {
-      // Paint after a tick so the transition animates.
       setTimeout(function () { barEl.style.width = Math.round((day / 30) * 100) + '%'; }, 400);
+    }
+
+    // Buildlog freshness: how long since the latest entry?
+    var fresh = document.getElementById('buildlog-freshness');
+    if (fresh) {
+      var deltaHrs = (now - LATEST_ENTRY) / 3600000;
+      var txt;
+      if (deltaHrs < 6) txt = 'last push: just now';
+      else if (deltaHrs < 24) txt = 'last push: today';
+      else if (deltaHrs < 48) txt = 'last push: yesterday';
+      else txt = 'last push: ' + Math.floor(deltaHrs / 24) + ' days ago';
+      fresh.textContent = txt;
     }
   })();
 

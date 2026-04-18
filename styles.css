@@ -387,12 +387,41 @@ button:focus-visible {
   font-weight: 600;
 }
 .social-proof__recent {
-  display: block;
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: 0.06em;
   color: var(--gold-soft);
-  margin-top: 2px;
+  padding-left: 8px;
+  border-left: 1px solid rgba(201,168,76,0.18);
+}
+.social-proof__founding {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  padding: 4px 10px;
+  margin-left: 4px;
+  background: var(--gold);
+  color: var(--bg);
+  border-radius: 100px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.social-proof__founding:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px -3px rgba(201,168,76,0.5);
+}
+.social-proof__founding-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--bg);
+  border-radius: 50%;
+  animation: livePulse 1.4s ease-in-out infinite;
 }
 
 /* Mid-page CTA */

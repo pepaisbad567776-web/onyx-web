@@ -1356,6 +1356,12 @@ button:focus-visible {
   .chat-bubble { max-width: 86%; }
   .chat-bubble__body { font-size: 12px; padding: 8px 12px 6px; }
   .chat-scroll { padding: 12px 10px 10px; }
+  .notifs { padding: 80px 0; }
+  .notifs__intro { margin-bottom: 40px; }
+  .notifs__stage { padding: 32px 0 24px; margin: 0 20px; }
+  .notifs__lock-time { font-size: 52px; }
+  .notifs__lock { margin-bottom: 20px; }
+  .notif__body { font-size: 13px; }
   .pricing { padding: 72px 0; }
   .pricing__row {
     grid-template-columns: 1fr;
@@ -1682,6 +1688,129 @@ button:focus-visible {
 @keyframes livePulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%      { opacity: 0.35; transform: scale(0.75); }
+}
+
+/* =========================================================
+   Notifications preview — ambient lock-screen proof
+   ========================================================= */
+
+.notifs {
+  padding: 120px 0;
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+}
+.notifs__inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 32px;
+  text-align: center;
+}
+.notifs__intro {
+  max-width: 540px;
+  margin: 28px auto 56px;
+}
+
+.notifs__stage {
+  position: relative;
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 44px 0 32px;
+  border-radius: 32px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 60%),
+    linear-gradient(180deg, #0c0c0c 0%, #050505 100%);
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6);
+}
+
+.notifs__lock {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.notifs__lock-time {
+  font-family: var(--sans);
+  font-weight: 200;
+  font-size: 64px;
+  line-height: 1;
+  color: var(--text);
+  letter-spacing: -0.04em;
+}
+.notifs__lock-date {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--text-2);
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+.notifs__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 14px;
+}
+
+.notif {
+  background: rgba(28, 28, 30, 0.78);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 13px 16px;
+  text-align: left;
+  box-shadow: 0 8px 24px -8px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.notif:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px -10px rgba(0,0,0,0.6);
+}
+.notif__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.notif__avatar {
+  width: 22px;
+  height: 22px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+  flex-shrink: 0;
+}
+.notif__name {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--gold);
+  font-weight: 600;
+}
+.notif__when {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  margin-left: auto;
+  text-transform: lowercase;
+}
+.notif__body {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+
+.notifs__footnote {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  text-align: center;
+  margin-top: 24px;
+  padding: 0 20px;
 }
 
 /* =========================================================

@@ -367,7 +367,7 @@
   // ----------------------------------------------------------------
 
   const revealTargets = document.querySelectorAll(
-    '.section-title, .card, .step, .compare__col, .founder__quote, .final__title, .phone-chat, .hero__title, .faq__item, .product-phone, .buildlog__entry, .buildlog__title, .talk__form, .pricing__row, .pricing__cta'
+    '.section-title, .card, .step, .compare__col, .founder__quote, .final__title, .phone-chat, .hero__title, .faq__item, .product-phone, .buildlog__entry, .buildlog__title, .talk__form, .pricing__row, .pricing__cta, .notifs__stage'
   );
 
   if ('IntersectionObserver' in window && revealTargets.length) {
@@ -468,7 +468,9 @@
     chat.addEventListener('touchstart', function () { userInteracted = true; }, { passive: true });
 
     // Auto-tour on first section-in-view: scroll from top to bottom slowly.
-    if ('IntersectionObserver' in window && productSection) {
+    // Skip entirely if the user prefers reduced motion.
+    var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReduced && 'IntersectionObserver' in window && productSection) {
       var started = false;
       new IntersectionObserver(function (entries) {
         if (started) return;

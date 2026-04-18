@@ -28,6 +28,34 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="styles.css">
+
+<!-- Structured data: Onyx as a product-in-development by J-Works HQ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Onyx",
+  "description": "A personal AI companion that lives in your phone — notices your money, your habits, and your momentum, and reaches out with the truth. Built for solo founders, side-hustlers, and anyone in it alone.",
+  "brand": {
+    "@type": "Organization",
+    "name": "J-Works HQ",
+    "founder": {
+      "@type": "Person",
+      "name": "Jaime"
+    }
+  },
+  "category": "Personal AI / Money + Habit Companion",
+  "offers": {
+    "@type": "Offer",
+    "availability": "https://schema.org/PreOrder",
+    "price": "4",
+    "priceCurrency": "USD",
+    "description": "Founding 100: $4/mo locked for life. ~$8/mo at public launch. Free during private beta."
+  },
+  "image": "https://onyx-web-tawny.vercel.app/og-image.svg",
+  "url": "https://onyx-web-tawny.vercel.app/"
+}
+</script>
 </head>
 <body>
 
@@ -657,6 +685,11 @@
     <div class="pricing__cta">
       <a href="#waitlist" class="pricing__cta-btn">Claim a founding spot &rarr;</a>
       <div class="pricing__cta-note">First 100 only. After that, standard pricing applies.</div>
+    </div>
+
+    <div class="pricing__context">
+      for context &mdash; your coffee habit ($4 &times; 5 days) is $80/mo.<br>
+      onyx founding is $4/mo.
     </div>
   </div>
 </section>

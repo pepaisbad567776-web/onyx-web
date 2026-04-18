@@ -2356,6 +2356,20 @@ button:focus-visible {
   color: var(--text-3);
   margin-top: 4px;
 }
+.pricing__context {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--text-2);
+  text-align: center;
+  margin-top: 48px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+}
 
 /* =========================================================
    FAQ

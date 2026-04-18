@@ -1148,6 +1148,14 @@ button:focus-visible {
   color: var(--gold);
   font-style: italic;
 }
+.founder__quote p.founder__for {
+  border-left: 2px solid var(--gold-dim);
+  padding-left: 20px;
+  font-style: italic;
+  color: var(--text);
+  font-size: 22px;
+  line-height: 1.5;
+}
 
 .founder__sig {
   margin-top: 44px;
@@ -1392,6 +1400,7 @@ button:focus-visible {
   .compare li { font-size: 17px; }
   .founder__quote p { font-size: 19px; }
   .founder__quote p:first-child { font-size: 24px; }
+  .founder__quote p.founder__for { font-size: 18px; padding-left: 16px; }
   .step__num { font-size: 72px; }
   .step__title { font-size: 24px; }
 }
@@ -1853,12 +1862,28 @@ button:focus-visible {
    Tester marquee
    ========================================================= */
 
-.marquee {
-  overflow: hidden;
-  padding: 32px 0;
+.marquee-wrap {
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   background: var(--bg);
+  padding: 32px 0 36px;
+}
+.marquee-wrap__label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 0 32px;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+}
+.marquee {
+  overflow: hidden;
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
           mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
 }
@@ -1875,15 +1900,6 @@ button:focus-visible {
   color: var(--text-2);
   white-space: nowrap;
   flex-shrink: 0;
-}
-.marquee__item em {
-  color: var(--text-3);
-  font-size: 12px;
-  font-family: var(--mono);
-  font-style: normal;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-left: 8px;
 }
 @keyframes marqueeScroll {
   0% { transform: translateX(0); }

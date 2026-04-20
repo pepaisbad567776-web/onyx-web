@@ -358,71 +358,53 @@ button:focus-visible {
 .cta-form--lg { max-width: 520px; margin: 40px auto 0; }
 .cta-form--mid { max-width: 480px; margin: 0 auto; }
 
-/* Social proof */
+/* Lifetime proof pill — honest scarcity indicator (replaces the
+   theatrical social-proof counter). Ties directly to SPOTS_LEFT so
+   visitors only ever see real numbers. */
 
-.social-proof {
+.lifetime-proof {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   margin-top: 16px;
-  padding: 6px 14px;
+  padding: 7px 14px 7px 12px;
   border-radius: 100px;
-  background: rgba(201,168,76,0.06);
-  border: 1px solid rgba(201,168,76,0.12);
-}
-.social-proof__dot {
-  width: 6px; height: 6px;
-  background: var(--gold);
-  border-radius: 50%;
-  animation: pulseDot 2.4s ease-in-out infinite;
-}
-.social-proof__text {
+  background: rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.24);
+  text-decoration: none;
+  color: var(--gold);
   font-family: var(--mono);
   font-size: 11px;
-  letter-spacing: 0.06em;
-  color: var(--text-2);
-}
-.social-proof__text strong {
-  color: var(--gold);
-  font-weight: 600;
-}
-.social-proof__recent {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.06em;
-  color: var(--gold-soft);
-  padding-left: 8px;
-  border-left: 1px solid rgba(201,168,76,0.18);
-}
-.social-proof__founding {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--mono);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--gold);
-  text-decoration: none;
-  padding: 4px 10px;
-  margin-left: 4px;
-  background: var(--gold);
-  color: var(--bg);
-  border-radius: 100px;
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
 }
-.social-proof__founding:hover {
+.lifetime-proof:hover {
+  background: rgba(201,168,76,0.14);
+  border-color: rgba(201,168,76,0.45);
   transform: translateY(-1px);
-  box-shadow: 0 4px 10px -3px rgba(201,168,76,0.5);
 }
-.social-proof__founding-dot {
-  width: 5px;
-  height: 5px;
-  background: var(--bg);
+.lifetime-proof__dot {
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
   border-radius: 50%;
   animation: livePulse 1.4s ease-in-out infinite;
+  flex-shrink: 0;
 }
+.lifetime-proof__label { font-weight: 700; letter-spacing: 0.14em; }
+.lifetime-proof__sep { color: rgba(201,168,76,0.4); }
+.lifetime-proof__count { color: var(--text-2); letter-spacing: 0.06em; }
+.lifetime-proof__count strong {
+  color: var(--gold);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.lifetime-proof__arrow {
+  margin-left: 2px;
+  transition: transform 0.2s ease;
+}
+.lifetime-proof:hover .lifetime-proof__arrow { transform: translateX(3px); }
 
 /* Mid-page CTA */
 

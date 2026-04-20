@@ -141,19 +141,24 @@
     });
   })();
 
-  // ---- Founder's Lifetime banner: dismiss + counter ----
+  // ---- Founder's Lifetime: single source of truth for spots remaining ----
+  // EDIT THIS NUMBER as real lifetime sales come in. Starts at 100.
+  // When you wire Stripe, a webhook can rewrite this file via CI — or
+  // just decrement manually when an order email lands in your inbox.
+  // Both the hero pill and the top banner read from this one constant
+  // so the page NEVER shows fake numbers.
   (function () {
-    var banner = document.getElementById('ltbanner');
-    if (!banner) return;
-
-    // EDIT THIS NUMBER as real lifetime sales come in. Starts at 100;
-    // decrement manually (or via your Stripe webhook when you wire it).
     var SPOTS_LEFT = 100;
 
-    var countEl = document.getElementById('ltbanner-count');
-    if (countEl) countEl.textContent = SPOTS_LEFT;
+    var bannerCount = document.getElementById('ltbanner-count');
+    if (bannerCount) bannerCount.textContent = SPOTS_LEFT;
 
-    // Dismiss — remember per-browser so it doesn't nag
+    var heroCount = document.getElementById('lifetime-open-count');
+    if (heroCount) heroCount.textContent = SPOTS_LEFT;
+
+    // Banner dismiss — remembered per-browser so it doesn't nag
+    var banner = document.getElementById('ltbanner');
+    if (!banner) return;
     var DISMISSED_KEY = 'onyx-ltbanner-dismissed';
     if (localStorage.getItem(DISMISSED_KEY) === '1') {
       banner.classList.add('is-dismissed');
@@ -223,29 +228,13 @@
     }
   })();
 
-  // ---- Live counter ----
+  // ---- Signup counter (real, not theatrical) ----
+  // Tracks signups from THIS browser only — used to set "position"
+  // on Formspree payloads and to generate unique referral codes.
+  // We no longer show a theatrical "N on the list" display since we
+  // can't verify it cross-browser without a backend.
   var COUNTER_KEY = 'onyx-counter';
-  var COUNTER_START = 347;
-  var counter = parseInt(localStorage.getItem(COUNTER_KEY)) || COUNTER_START;
-  var recentBump = 0;
-
-  function updateCounterDisplay() {
-    var el = document.getElementById('signup-count');
-    if (el) el.textContent = counter;
-    var rc = document.getElementById('recent-count');
-    if (rc) rc.textContent = Math.max(recentBump, 2 + Math.floor(Math.random() * 3));
-  }
-  updateCounterDisplay();
-
-  function tickCounter() {
-    var bump = 1 + Math.floor(Math.random() * 3);
-    counter += bump;
-    recentBump += bump;
-    localStorage.setItem(COUNTER_KEY, counter);
-    updateCounterDisplay();
-    setTimeout(tickCounter, (30 + Math.random() * 60) * 1000);
-  }
-  setTimeout(tickCounter, (30 + Math.random() * 60) * 1000);
+  var counter = parseInt(localStorage.getItem(COUNTER_KEY)) || 0;
 
   // ---- Referral helpers ----
   function hashEmail(email) {
@@ -261,12 +250,10 @@
     var modal = document.getElementById('ref-modal');
     if (!modal) return;
 
-    var pos = counter;
     var code = hashEmail(email);
     var refUrl = window.location.origin + '/?ref=' + code;
     var shareText = 'I just signed up for Onyx — an AI companion that tracks your money, habits, and momentum. Get on the list: ' + refUrl;
 
-    document.getElementById('ref-pos').textContent = pos;
     document.getElementById('ref-url').value = refUrl;
     document.getElementById('ref-twitter').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText);
     document.getElementById('ref-whatsapp').href = 'https://wa.me/?text=' + encodeURIComponent(shareText);
@@ -347,7 +334,6 @@
 
       counter++;
       localStorage.setItem(COUNTER_KEY, counter);
-      updateCounterDisplay();
 
       if (window.onyxCelebrate) window.onyxCelebrate();
 

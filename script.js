@@ -113,6 +113,60 @@
   var urlParams = new URLSearchParams(window.location.search);
   var referredBy = urlParams.get('ref') || null;
 
+  // ---- Lifetime CTA intent (pricing page → hero waitlist) ----
+  // When someone clicks "Claim lifetime →" on the pricing section,
+  // we arm a flag + smooth-scroll to the waitlist. The next form submit
+  // picks up the flag and adds "lifetime_interest: yes" to Formspree.
+  // When they have a real Stripe Payment Link, swap the anchor for that URL.
+  (function () {
+    var lifetimeBtns = document.querySelectorAll('[data-intent="lifetime"]');
+    if (!lifetimeBtns.length) return;
+    lifetimeBtns.forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        // If the href has been replaced with a real Stripe URL, let it go.
+        var href = btn.getAttribute('href') || '';
+        if (/^https?:\/\//.test(href)) return;
+        // Otherwise — arm the flag and scroll to the waitlist form.
+        e.preventDefault();
+        window.__onyxPendingLifetimeIntent = true;
+        var hero = document.getElementById('email-input');
+        if (hero) {
+          hero.focus({ preventScroll: true });
+          hero.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Visual hint: briefly glow the input so they know why they landed here.
+          hero.classList.add('is-lifetime-armed');
+          setTimeout(function () { hero.classList.remove('is-lifetime-armed'); }, 3000);
+        }
+      });
+    });
+  })();
+
+  // ---- Founder's Lifetime banner: dismiss + counter ----
+  (function () {
+    var banner = document.getElementById('ltbanner');
+    if (!banner) return;
+
+    // EDIT THIS NUMBER as real lifetime sales come in. Starts at 100;
+    // decrement manually (or via your Stripe webhook when you wire it).
+    var SPOTS_LEFT = 100;
+
+    var countEl = document.getElementById('ltbanner-count');
+    if (countEl) countEl.textContent = SPOTS_LEFT;
+
+    // Dismiss — remember per-browser so it doesn't nag
+    var DISMISSED_KEY = 'onyx-ltbanner-dismissed';
+    if (localStorage.getItem(DISMISSED_KEY) === '1') {
+      banner.classList.add('is-dismissed');
+    }
+    var dismissBtn = document.getElementById('ltbanner-dismiss');
+    if (dismissBtn) {
+      dismissBtn.addEventListener('click', function () {
+        banner.classList.add('is-dismissed');
+        try { localStorage.setItem(DISMISSED_KEY, '1'); } catch (_) {}
+      });
+    }
+  })();
+
   // ---- Scroll progress indicator (top gold line) ----
   (function () {
     var bar = document.getElementById('scroll-progress-bar');
@@ -245,13 +299,27 @@
       var btn = form.querySelector('button');
       if (btn) { btn.disabled = true; btn.textContent = 'Saving\u2026'; }
 
+      // Read the optional "what eats your money?" intent from the hero form (if present).
+      var intentEl = document.getElementById('intent-input');
+      var intent = (intentEl && intentEl.value || '').trim();
+
+      // Pending lifetime interest — set by clicking "Claim lifetime →" on the pricing page,
+      // which scrolls the user to the waitlist with this flag already armed.
+      var lifetimeIntent = window.__onyxPendingLifetimeIntent === true;
+
+      var subjectPrefix = lifetimeIntent
+        ? '[Onyx LIFETIME interest] '
+        : '[Onyx waitlist #' + counter + '] ';
+
       var payload = {
-        _subject: '[Onyx waitlist #' + counter + '] ' + email,
+        _subject: subjectPrefix + email + (intent ? ' (' + intent + ')' : ''),
         _replyto: email,
         email: email,
         source: formId,
         ref: referredBy,
         position: counter,
+        intent: intent || '',
+        lifetime_interest: lifetimeIntent ? 'yes' : '',
         timestamp: new Date().toISOString(),
       };
 
@@ -273,6 +341,9 @@
           localStorage.setItem('onyx-waitlist', JSON.stringify(list));
         }
       } catch (_) {}
+
+      // Reset lifetime intent flag after use so later signups don't carry it.
+      window.__onyxPendingLifetimeIntent = false;
 
       counter++;
       localStorage.setItem(COUNTER_KEY, counter);

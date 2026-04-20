@@ -62,6 +62,19 @@
 <!-- Grain overlay -->
 <div class="grain" aria-hidden="true"></div>
 
+<!-- Founder's Lifetime banner — first-100 scarcity above the nav -->
+<div class="ltbanner" id="ltbanner">
+  <a href="#pricing" class="ltbanner__inner">
+    <span class="ltbanner__label">Founder's Lifetime</span>
+    <span class="ltbanner__sep">&middot;</span>
+    <span class="ltbanner__price">$99 one-time</span>
+    <span class="ltbanner__sep">&middot;</span>
+    <span class="ltbanner__left"><span id="ltbanner-count">100</span> left</span>
+    <span class="ltbanner__arrow" aria-hidden="true">&rarr;</span>
+  </a>
+  <button class="ltbanner__dismiss" id="ltbanner-dismiss" aria-label="Dismiss banner">&times;</button>
+</div>
+
 <!-- Scroll progress (thin gold line at the top of the viewport) -->
 <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
 
@@ -97,6 +110,10 @@
       A personal AI that tracks your <strong>money</strong>, your <strong>habits</strong>, and your <strong>momentum</strong> &mdash; and reads you the truth every morning.
     </p>
 
+    <div class="hero__pills">
+      <span class="trust-pill"><span class="trust-pill__dot"></span>your data is yours. never sold. export anytime.</span>
+    </div>
+
     <p class="hero__body">
       No guilt trips. No 40-tab dashboards. Just the friend who notices
       before it's a problem.
@@ -109,6 +126,20 @@
         <svg width="14" height="12" viewBox="0 0 14 12" fill="none" aria-hidden="true"><path d="M8 1L13 6L8 11M13 6H0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
     </form>
+    <div class="cta-form__row">
+      <label class="cta-form__intent" for="intent-input">
+        <span class="cta-form__intent-label">what eats your money?</span>
+        <select id="intent-input" name="intent" class="cta-form__intent-select" aria-label="What eats your money">
+          <option value="">pick one &mdash; optional</option>
+          <option value="food-delivery">food delivery</option>
+          <option value="subscriptions">subscriptions</option>
+          <option value="impulse-buys">impulse buys</option>
+          <option value="going-out">going out</option>
+          <option value="the-3am-cart">the 3am cart</option>
+          <option value="none">none of the above</option>
+        </select>
+      </label>
+    </div>
     <div class="cta-note" id="cta-note">
       No spam. No paid ads. Just the ones who get it.
     </div>
@@ -116,7 +147,7 @@
       <span class="social-proof__dot"></span>
       <span class="social-proof__text"><strong id="signup-count">347</strong> on the list</span>
       <span class="social-proof__recent">+<span id="recent-count">3</span> this hour</span>
-      <a href="#pricing" class="social-proof__founding"><span class="social-proof__founding-dot"></span>Founding 100 open</a>
+      <a href="#pricing" class="social-proof__founding"><span class="social-proof__founding-dot"></span>Lifetime · $99</a>
     </div>
 
     <div class="hero__trust">
@@ -694,6 +725,10 @@
     </div>
     <div class="buildlog__list">
       <div class="buildlog__entry">
+        <span class="buildlog__day">day 19</span>
+        <p class="buildlog__note">flipped the switch: selling. founder's lifetime at $99 one-time (first 100 only). free / pro / lifetime pricing. momentum score card in every day-feed. intent dropdown ("what eats your money"). banner up top. ready for stripe.</p>
+      </div>
+      <div class="buildlog__entry">
         <span class="buildlog__day">day 18</span>
         <p class="buildlog__note">killed the dashboard. onyx is a conversation now. added lock-screen notifs, day-18/30 countdown, honest privacy FAQ, legal pages, audience-specific copy. big night.</p>
       </div>
@@ -753,45 +788,70 @@
 <!-- Pricing — honest numbers, founding cohort -->
 <section class="pricing" id="pricing">
   <div class="pricing__inner">
-    <div class="section-label">// pricing &middot; honest numbers</div>
+    <div class="section-label">// pricing &middot; plainly</div>
     <h2 class="section-title">
-      What Onyx<br>
-      <em>will cost.</em>
+      Pricing,<br>
+      <em>plainly.</em>
     </h2>
     <p class="section-body pricing__intro">
-      No surprise charges. No annual lock-in. Cancel any time.
-      Here's the whole plan, on one page.
+      Free works. Pro is for the ones who want the full companion.
+      Lifetime is for the ones who believed early.
     </p>
 
-    <div class="pricing__rows">
-      <div class="pricing__row">
-        <div class="pricing__when">During private beta</div>
-        <div class="pricing__price">Free</div>
-        <div class="pricing__note">Everyone on the waitlist gets in for nothing. No card. No trial timer.</div>
-      </div>
+    <div class="pricing__rows pricing__rows--three">
+      <!-- FREE -->
+      <article class="pricing__row">
+        <div class="pricing__when">Free forever</div>
+        <div class="pricing__price">$0</div>
+        <ul class="pricing__features">
+          <li>morning brief, daily</li>
+          <li>onyx momentum score</li>
+          <li>basic check-in</li>
+          <li>&mdash;</li>
+          <li>&mdash;</li>
+        </ul>
+        <a href="#waitlist" class="pricing__row-cta pricing__row-cta--secondary">Get on the waitlist</a>
+      </article>
 
-      <div class="pricing__row">
-        <div class="pricing__when">At public launch</div>
-        <div class="pricing__price">~$8<span class="pricing__per">/mo</span></div>
-        <div class="pricing__note">One tier. Every feature. No pro/plus/premium shell game.</div>
-      </div>
+      <!-- PRO -->
+      <article class="pricing__row">
+        <div class="pricing__when">Pro</div>
+        <div class="pricing__price">$7.99<span class="pricing__per">/mo</span></div>
+        <div class="pricing__sub">or $49 yearly</div>
+        <ul class="pricing__features">
+          <li>everything in Free</li>
+          <li>multi-account (bank + cards)</li>
+          <li>unlimited history</li>
+          <li>proactive mid-day pings</li>
+          <li>export your data any time</li>
+        </ul>
+        <a href="#waitlist" class="pricing__row-cta pricing__row-cta--secondary">Reserve Pro</a>
+      </article>
 
-      <div class="pricing__row pricing__row--founding">
-        <div class="pricing__tag">Founding&nbsp;100</div>
-        <div class="pricing__when">First 100 signups, forever</div>
-        <div class="pricing__price">$4<span class="pricing__per">/mo</span></div>
-        <div class="pricing__note">Locked-in rate for life. Your $4 is what lets Onyx exist in the first place.</div>
-      </div>
-    </div>
-
-    <div class="pricing__cta">
-      <a href="#waitlist" class="pricing__cta-btn">Claim a founding spot &rarr;</a>
-      <div class="pricing__cta-note">First 100 only. After that, standard pricing applies.</div>
+      <!-- FOUNDER'S LIFETIME -->
+      <article class="pricing__row pricing__row--founding">
+        <div class="pricing__tag">Founder's Lifetime</div>
+        <div class="pricing__when">First 100 only</div>
+        <div class="pricing__price">$99<span class="pricing__per">once</span></div>
+        <div class="pricing__sub">pays for itself in 13 months vs Pro</div>
+        <ul class="pricing__features">
+          <li>everything in Pro, forever</li>
+          <li>private Discord with first 100</li>
+          <li>direct access to Jaime</li>
+          <li>name in the credits</li>
+          <li>locked in before the price moves</li>
+        </ul>
+        <!-- TODO: replace href with real Stripe Payment Link when ready to charge.
+             Create one at stripe.com/payment-links (product: "Onyx Founder's Lifetime", $99 one-time),
+             then swap the href below. Until then, clicking adds them to the lifetime
+             waitlist via the standard waitlist form with an "intent" flag. -->
+        <a href="#waitlist" class="pricing__row-cta pricing__row-cta--primary" data-intent="lifetime">Claim lifetime &rarr;</a>
+      </article>
     </div>
 
     <div class="pricing__context">
-      for context &mdash; your coffee habit ($4 &times; 5 days) is $80/mo.<br>
-      onyx founding is $4/mo.
+      for context &mdash; a Starbucks-a-day habit is <strong>$1,460</strong> a year.
+      Onyx Lifetime is <strong>$99</strong>, once.
     </div>
   </div>
 </section>
@@ -807,7 +867,7 @@
       </div>
       <div class="faq__item">
         <h3 class="faq__q">How much will it cost?</h3>
-        <p class="faq__a">Free during private beta. ~$8/mo at launch. First 100 signups lock in $4/mo for life. <a href="#pricing">See full pricing &rarr;</a></p>
+        <p class="faq__a">Free forever (core tier). Pro is $7.99/mo or $49/yr. Founder's Lifetime is $99 one-time &mdash; first 100 only, everything in Pro forever plus private Discord and direct access. <a href="#pricing">See full pricing &rarr;</a></p>
       </div>
       <div class="faq__item">
         <h3 class="faq__q">What data does Onyx see?</h3>

@@ -1460,16 +1460,11 @@ button:focus-visible {
   .notifs__lock { margin-bottom: 20px; }
   .notif__body { font-size: 13px; }
   .pricing { padding: 72px 0; }
-  .pricing__row {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 12px;
-    padding: 28px 24px;
-  }
-  .pricing__row .pricing__when { order: 1; }
-  .pricing__row .pricing__price { order: 2; font-size: 48px; }
-  .pricing__row .pricing__note { order: 3; }
-  .pricing__tag { top: -11px; left: 50%; transform: translateX(-50%); }
+  .pricing__rows--three { grid-template-columns: 1fr; gap: 20px; }
+  .pricing__row { padding: 28px 22px 24px; }
+  .pricing__row--founding { margin-top: 12px; }
+  .pricing__price { font-size: 44px; }
+  .pricing__tag { top: -11px; left: 20px; }
   .faq { padding: 72px 0; }
   .faq__q { font-size: 19px; }
   .founder__avatar { width: 48px; height: 48px; font-size: 26px; }
@@ -1972,6 +1967,138 @@ button:focus-visible {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%      { opacity: 0.35; transform: scale(0.75); }
 }
+
+/* =========================================================
+   Founder's Lifetime banner (above the nav)
+   ========================================================= */
+
+.ltbanner {
+  position: relative;
+  background: linear-gradient(90deg, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.06) 100%);
+  border-bottom: 1px solid rgba(201,168,76,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  z-index: 50;
+}
+.ltbanner.is-dismissed { display: none; }
+.ltbanner__inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
+.ltbanner__inner:hover { color: var(--gold-hover); }
+.ltbanner__label { font-weight: 700; letter-spacing: 0.14em; }
+.ltbanner__sep { color: rgba(201,168,76,0.4); }
+.ltbanner__price { color: var(--text); font-weight: 500; }
+.ltbanner__left { color: var(--gold); }
+.ltbanner__left #ltbanner-count { font-weight: 700; font-variant-numeric: tabular-nums; }
+.ltbanner__arrow {
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+}
+.ltbanner__inner:hover .ltbanner__arrow { transform: translateX(3px); }
+.ltbanner__dismiss {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-3);
+  font-size: 18px;
+  line-height: 1;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.ltbanner__dismiss:hover { color: var(--text); }
+@media (max-width: 640px) {
+  .ltbanner__sep,
+  .ltbanner__price { display: none; }
+  .ltbanner__inner { font-size: 10px; gap: 6px; padding: 9px 44px 9px 16px; }
+  .ltbanner__label { letter-spacing: 0.1em; }
+}
+
+/* =========================================================
+   Hero trust pill (honest privacy)
+   ========================================================= */
+
+.hero__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.trust-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 10px;
+  background: rgba(201,168,76,0.06);
+  border: 1px solid rgba(201,168,76,0.16);
+  border-radius: 100px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+  text-transform: lowercase;
+}
+.trust-pill__dot {
+  width: 6px; height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+/* =========================================================
+   Intent dropdown on hero signup
+   ========================================================= */
+
+.cta-form__row {
+  margin-top: 10px;
+  max-width: 420px;
+}
+.cta-form__intent {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cta-form__intent-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.cta-form__intent-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  color: var(--text);
+  padding: 10px 32px 10px 12px;
+  font-family: var(--sans);
+  font-size: 13px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23c9a84c' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  transition: border-color 0.15s;
+}
+.cta-form__intent-select:hover { border-color: var(--gold-dim); }
+.cta-form__intent-select:focus { outline: none; border-color: var(--gold); }
+
+/* Visual hint when hero email input is armed for a Lifetime claim */
+.is-lifetime-armed { box-shadow: 0 0 0 2px var(--gold), 0 0 24px rgba(201,168,76,0.3); }
 
 /* Scroll progress — thin gold line at the very top of the viewport */
 .scroll-progress {
@@ -2511,20 +2638,25 @@ button:focus-visible {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-bottom: 56px;
+  margin-bottom: 40px;
+}
+.pricing__rows--three {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 40px;
 }
 .pricing__row {
-  display: grid;
-  grid-template-columns: 1.4fr auto 1.4fr;
-  align-items: center;
-  gap: 32px;
-  padding: 28px 32px;
+  padding: 32px 28px 28px;
   border: 1px solid var(--line-strong);
   border-radius: 14px;
   background: var(--surface);
   text-align: left;
   position: relative;
   transition: border-color 0.2s, transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 .pricing__row:hover { border-color: var(--text-3); }
 
@@ -2534,22 +2666,30 @@ button:focus-visible {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text-3);
+  margin-bottom: 14px;
 }
 .pricing__price {
   font-family: var(--serif);
-  font-size: 56px;
+  font-size: 52px;
   font-weight: 400;
   color: var(--text);
   line-height: 1;
   letter-spacing: -0.03em;
   white-space: nowrap;
-  text-align: center;
+  margin-bottom: 4px;
 }
 .pricing__per {
-  font-size: 18px;
+  font-size: 15px;
   color: var(--text-3);
   margin-left: 4px;
   font-family: var(--sans);
+}
+.pricing__sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  margin-bottom: 22px;
 }
 .pricing__note {
   font-family: var(--sans);
@@ -2557,60 +2697,75 @@ button:focus-visible {
   line-height: 1.5;
   color: var(--text-2);
 }
+.pricing__features {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+.pricing__features li {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--text-2);
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.04);
+}
+.pricing__features li:last-child { border-bottom: none; }
+
+.pricing__row-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 13px 18px;
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.15s, transform 0.15s, border-color 0.15s;
+  text-align: center;
+}
+.pricing__row-cta--secondary {
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--text-2);
+}
+.pricing__row-cta--secondary:hover { border-color: var(--gold); color: var(--gold); }
+.pricing__row-cta--primary {
+  background: var(--gold);
+  color: var(--bg);
+  border: 1px solid var(--gold);
+}
+.pricing__row-cta--primary:hover { background: var(--gold-hover); transform: translateY(-1px); }
 
 .pricing__row--founding {
   border-color: var(--gold-dim);
-  background: linear-gradient(135deg, rgba(201,168,76,0.06) 0%, rgba(201,168,76,0.02) 100%);
+  background: linear-gradient(180deg, rgba(201,168,76,0.08) 0%, rgba(201,168,76,0.02) 100%);
   position: relative;
 }
-.pricing__row--founding:hover { border-color: var(--gold); transform: translateY(-2px); }
+.pricing__row--founding:hover { border-color: var(--gold); transform: translateY(-4px); }
 .pricing__row--founding .pricing__price { color: var(--gold); }
 .pricing__row--founding .pricing__when { color: var(--gold-dim); }
+.pricing__row--founding .pricing__sub { color: var(--gold-soft); }
 
 .pricing__tag {
   position: absolute;
   top: -12px;
-  left: 32px;
+  left: 20px;
   background: var(--gold);
   color: var(--bg);
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700;
   padding: 5px 12px;
   border-radius: 100px;
   white-space: nowrap;
-}
-
-.pricing__cta {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-.pricing__cta-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--gold);
-  color: var(--bg);
-  text-decoration: none;
-  padding: 16px 28px;
-  border-radius: 12px;
-  font-family: var(--sans);
-  font-size: 15px;
-  font-weight: 600;
-  transition: background 0.15s, transform 0.15s;
-}
-.pricing__cta-btn:hover { background: var(--gold-hover); transform: translateY(-1px); }
-.pricing__cta-note {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  margin-top: 4px;
 }
 .pricing__context {
   font-family: var(--serif);
